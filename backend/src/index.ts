@@ -14,4 +14,8 @@ app.listen(port, () => {
 });
 
 require('./endpoints')(app);
+
+const jsonwebtoken = require('jsonwebtoken');
+const jwt = require('express-jwt');
+const secret = 'secret';
 //const swaggerAutogen = require('swagger-autogen')();
