@@ -39,6 +39,59 @@
           }
         }
       }
+    },
+    "/login": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Adding new user.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "admin@gamer.com"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123123"
+                }
+              },
+              "required": [
+                "email",
+                "name",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
