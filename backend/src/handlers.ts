@@ -15,10 +15,16 @@ type HelloBuilder = (name: string) => HelloResponse;
 const helloBuilder: HelloBuilder = (name) => ({ hello: name });
 
 export const rootHandler = (_req: Request, res: Response) => {
+    /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
   return res.send("API is working 🤓");
 };
 
 export const helloHandler = (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
   const { params } = req;
   const { name = "World" } = params;
   const response = helloBuilder(name);
@@ -27,15 +33,10 @@ export const helloHandler = (req: Request, res: Response) => {
 };
 
 export const signupHandler = async (req: Request, res: Response) => {
-        /*    #swagger.parameters['obj'] = {
-                in: 'body',
-                description: 'Adding new user.',
-                schema: {
-                    $email: 'admin@gamer.com',
-                    $name: 'John Doe',
-                    $password: '123123',
-                }
-        } */
+    /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/User" }
+    } */
   const { body } = req;
   const { email, name, password } = body;
   const token = jwt.sign({ email, name }, process.env.JWT_SECRET as string, {

@@ -1,4 +1,4 @@
-const swaggerAutogen = require('swagger-autogen')();
+const swaggerAutogen = require('swagger-autogen')({openapi: '3.0.0'});
 
 const doc = {
   info: {
@@ -7,6 +7,20 @@ const doc = {
   },
   host: 'localhost:3000',
   schemes: ['http'],
+  securityDefinitions: {
+    bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT'
+    }
+  },
+  definitions: {
+    User: {
+      email: 'Jhon@Doe.com',
+      name: 'Jhon Doe',
+      password: "123123",
+    },
+  },
 };
 
 const outputFile = './src/swagger.json';
