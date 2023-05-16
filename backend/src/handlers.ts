@@ -29,10 +29,9 @@ export const signupHandler = async (req: Request, res: Response) => {
   const { email, username, password } = body;
   const user = await prisma.user.create({
     data: {
-        email: email,
-        name: username,
-        password: "weee",
-        bookings: [],
+        email: "email",
+        name: "username",
+        password: "password",
     },
   })
   return res.json(user);
