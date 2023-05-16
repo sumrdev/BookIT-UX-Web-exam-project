@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../fontend/node_modules/.prisma/client"
+  output   = "../../fontend/node_modules/.prisma/client"
 }
 
 datasource db {
