@@ -53,6 +53,14 @@ export const signupHandler = async (req: Request, res: Response) => {
 };
 
 export const loginHandler = async (req: Request, res: Response) => {
+    /*    #swagger.parameters['obj'] = {
+          in: 'body',
+          description: 'Adding new user.',
+          schema: {
+              $email: 'admin@gamer.com',
+              $password: '123123',
+          }
+  } */
   const { body } = req;
   const { email, password } = body;
   const user = await prisma.user.findFirst({
