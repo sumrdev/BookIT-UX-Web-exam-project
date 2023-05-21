@@ -6,36 +6,17 @@ import argon2 from "argon2";
 
 const prisma = new PrismaClient();
 
-interface HelloResponse {
-  hello: string;
-}
-
-type HelloBuilder = (name: string) => HelloResponse;
-
-const helloBuilder: HelloBuilder = (name) => ({ hello: name });
-
 export const rootHandler = (_req: Request, res: Response) => {
-    /* #swagger.security = [{
+  /* #swagger.security = [{
           "bearerAuth": []
   }] */
   return res.send("API is working 🤓");
 };
 
-export const helloHandler = (req: Request, res: Response) => {
-  /* #swagger.security = [{
-          "bearerAuth": []
-  }] */
-  const { params } = req;
-  const { name = "World" } = params;
-  const response = helloBuilder(name);
-
-  return res.json(response);
-};
-
 export const signupHandler = async (req: Request, res: Response) => {
-    /*	#swagger.requestBody = {
+  /*	#swagger.requestBody = {
             required: true,
-            schema: { $ref: "#/definitions/User" }
+            schema: { $ref: "#/definitions/CreateUser" }
     } */
   const { body } = req;
   const { email, name, password } = body;
@@ -53,14 +34,10 @@ export const signupHandler = async (req: Request, res: Response) => {
 };
 
 export const loginHandler = async (req: Request, res: Response) => {
-    /*    #swagger.parameters['obj'] = {
-          in: 'body',
-          description: 'Adding new user.',
-          schema: {
-              $email: 'admin@gamer.com',
-              $password: '123123',
-          }
-  } */
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/LoginUser" }
+    } */
   const { body } = req;
   const { email, password } = body;
   const user = await prisma.user.findFirst({

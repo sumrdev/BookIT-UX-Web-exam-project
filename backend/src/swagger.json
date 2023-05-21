@@ -27,64 +27,31 @@
         ]
       }
     },
-    "/hello/{name}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
-      }
-    },
     "/login": {
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "Adding new user.",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "admin@gamer.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "123123"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
           },
           "401": {
             "description": "Unauthorized"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUser"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUser"
+              }
+            }
           }
         }
       }
@@ -103,12 +70,12 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/CreateUser"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/User"
+                "$ref": "#/components/schemas/CreateUser"
               }
             }
           }
@@ -118,7 +85,7 @@
   },
   "components": {
     "schemas": {
-      "User": {
+      "CreateUser": {
         "type": "object",
         "properties": {
           "email": {
@@ -135,7 +102,23 @@
           }
         },
         "xml": {
-          "name": "User"
+          "name": "CreateUser"
+        }
+      },
+      "LoginUser": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "Jhon@Doe.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123123"
+          }
+        },
+        "xml": {
+          "name": "LoginUser"
         }
       }
     },

@@ -15,11 +15,15 @@ const doc = {
     }
   },
   definitions: {
-    User: {
+    CreateUser: {
       email: 'Jhon@Doe.com',
       name: 'Jhon Doe',
       password: "123123",
     },
+    LoginUser: {
+      email: 'Jhon@Doe.com',
+      password: "123123",
+    }
   },
 };
 
