@@ -23,6 +23,17 @@ const doc = {
     LoginUser: {
       email: 'Jhon@Doe.com',
       password: "123123",
+    },
+    CreateRoom: {
+      name: 'Room 1',
+      type: 'Skybox',
+      capacity: 10,
+      powerOutlets: 5,
+      ethernetPorts: 5,
+      externalMonitor: true,
+      whiteboard: true,
+      eatingAllowed: true,
+      bookings: {},
     }
   },
 };

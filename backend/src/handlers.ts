@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { expressjwt, Request as JWTRequest } from "express-jwt";
 var jwt = require("jsonwebtoken");
 import argon2 from "argon2";
+import { execArgv } from "process";
 
 const prisma = new PrismaClient();
 
@@ -61,3 +62,55 @@ export const loginHandler = async (req: Request, res: Response) => {
   );
   return res.json(token);
 };
+
+export const createRoom = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/CreateRoom" }
+      } 
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  const { body } = req;
+  const { name, type, capacity, powerOutlets, ethernetPorts, externalMonitor, whiteboard, eatingAllowed, bookings } = body;
+  
+  const room = await prisma.room.create({
+    data: {
+      name: name,
+      type: type,
+      capacity: capacity,
+      powerOutlets: powerOutlets,
+      ethernetPorts: ethernetPorts,
+      externalMonitor: externalMonitor,
+      whiteboard: whiteboard,
+      eatingAllowed: eatingAllowed,
+      bookings: bookings,
+    },
+  });
+  return res.json(room);
+}
+
+export const getRoom = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const room = await prisma.room.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  if (!room) {
+    return res.status(404).json({ message: "Room not found" });
+  }
+  return res.json(room);
+}
+
+export const getRooms = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const rooms = await prisma.room.findMany();
+  return res.json(rooms);
+}

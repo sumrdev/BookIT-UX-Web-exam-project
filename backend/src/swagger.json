@@ -81,6 +81,79 @@
           }
         }
       }
+    },
+    "/rooms": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoom"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoom"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -119,6 +192,50 @@
         },
         "xml": {
           "name": "LoginUser"
+        }
+      },
+      "CreateRoom": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Room 1"
+          },
+          "type": {
+            "type": "string",
+            "example": "Skybox"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 10
+          },
+          "powerOutlets": {
+            "type": "number",
+            "example": 5
+          },
+          "ethernetPorts": {
+            "type": "number",
+            "example": 5
+          },
+          "externalMonitor": {
+            "type": "boolean",
+            "example": true
+          },
+          "whiteboard": {
+            "type": "boolean",
+            "example": true
+          },
+          "eatingAllowed": {
+            "type": "boolean",
+            "example": true
+          },
+          "bookings": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "xml": {
+          "name": "CreateRoom"
         }
       }
     },

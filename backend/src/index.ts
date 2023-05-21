@@ -26,7 +26,9 @@ app.use(
     jwt({
       secret: secret,
       algorithms: ["HS256"],
-      getToken: (req: any) => req.headers.authorization && req.headers.authorization.split(" ")[1].replace(/['"]+/g, ''),
+      getToken: (req: any) => {
+        if(req.headers.authorization) return req.headers.authorization.split(" ")[1].replace(/['"]+/g, '');
+      }
     }).unless({ path: ["/login", "/signup"] })
   );
 
