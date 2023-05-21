@@ -45,7 +45,24 @@ const doc = {
       email: 'john@doe.com',
       name: 'John Doe',
       password: '123123',
-    }
+    },
+    CreateUserAdmin: {
+      email: 'admin@maybe.com',
+      name: 'big boss',
+      password: '123123',
+      admin: true,
+    },
+    UpdateRoom: {
+      name: 'Auditorium 1',
+      type: 'Auditorium',
+      capacity: 100,
+      powerOutlets: 5,
+      ethernetPorts: 5,
+      externalMonitor: true,
+      whiteboard: true,
+      eatingAllowed: true,
+      bookings: {},
+    },
   },
 };
 

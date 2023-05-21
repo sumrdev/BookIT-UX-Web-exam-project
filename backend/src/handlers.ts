@@ -3,8 +3,6 @@ import { PrismaClient } from "@prisma/client";
 import { expressjwt, Request as JWTRequest } from "express-jwt";
 var jwt = require("jsonwebtoken");
 import argon2 from "argon2";
-import { execArgv } from "process";
-
 const prisma = new PrismaClient();
 
 export const rootHandler = (_req: Request, res: Response) => {
@@ -138,6 +136,41 @@ export const createBooking = async (req: Request, res: Response) => {
   // return res.json(booking);
 }
 
+export const createUser = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/CreateUser" }
+      }
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  const { body } = req;
+  const { email, name, password, isAdmin } = body;
+  const user = await prisma.user.create({
+    data: {
+      email: email,
+      name: name,
+      password: await argon2.hash(password),
+      admin: isAdmin,
+    },
+  });
+  return res.json(user);
+}
+
+export const deleteUser = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const user = await prisma.user.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  return res.json(user);
+}
+
 export const getUsers = async (req: Request, res: Response) => {
   /* #swagger.security = [{
           "bearerAuth": []
@@ -161,6 +194,7 @@ export const getUser = async (req: Request, res: Response) => {
   }
   return res.json(user);
 }
+
 export const updateUser = async (req: Request, res: Response) => {
   /*	#swagger.requestBody = {
             required: true,
@@ -199,4 +233,65 @@ export const updateUser = async (req: Request, res: Response) => {
     },
   });
   return res.json(updatedUser);
+}
+
+export const updateRoom = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/UpdateRoom" }
+      } 
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  const { body } = req;
+  const { id } = req.params;
+  let { name, type, capacity, powerOutlets, ethernetPorts, externalMonitor, whiteboard, eatingAllowed, bookings } = body;
+
+  const room = await prisma.room.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if(!name) name = room?.name;
+  if(!type) type = room?.type;
+  if(!capacity) capacity = room?.capacity;
+  if(!powerOutlets) powerOutlets = room?.powerOutlets;
+  if(!ethernetPorts) ethernetPorts = room?.ethernetPorts;
+  if(!externalMonitor) externalMonitor = room?.externalMonitor;
+  if(!whiteboard) whiteboard = room?.whiteboard;
+  if(!eatingAllowed) eatingAllowed = room?.eatingAllowed;
+  // if(!bookings) bookings = room?.bookings; //TODO: this doesnt work for some reason
+
+  const updatedRoom = await prisma.room.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      name: name,
+      type: type,
+      capacity: capacity,
+      powerOutlets: powerOutlets,
+      ethernetPorts: ethernetPorts,
+      externalMonitor: externalMonitor,
+      whiteboard: whiteboard,
+      eatingAllowed: eatingAllowed,
+      bookings: bookings,
+    },
+  });
+  return res.json(updatedRoom);
+}
+
+export const deleteRoom = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const room = await prisma.room.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  return res.json(room);
 }
