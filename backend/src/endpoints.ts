@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { rootHandler, loginHandler, signupHandler, createRoom, getRoom, getRooms } from "./handlers";
+import { rootHandler, loginHandler, signupHandler, createRoom, getRoom, getRooms, getUser, getUsers, updateUser } from "./handlers";
 
 function wrapTryCatch(fn: Function) {
     return async function (req: any, res: any) {
@@ -37,13 +37,13 @@ module.exports = function (app: Express) {
 
     //for admin 
     //get all users
-    app.get("/user");
+    app.get("/user", getUsers);
     //get a user by id
-    app.get("/user/:id");
+    app.get("/user/:id", getUser);
     //create a user
     app.post("/user/:id");
     //update a user by id
-    app.put("/user/:id");
+    app.put("/user/:id", updateUser);
     //delete a user by id
     app.delete("/users/:id");
     //create a room

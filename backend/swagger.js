@@ -34,6 +34,17 @@ const doc = {
       whiteboard: true,
       eatingAllowed: true,
       bookings: {},
+    },
+    CreateBooking: {
+      startTime: Date.now(),
+      endTime: Date.now()+3600000,
+      roomId: 1,
+      userId: 2,
+    },
+    UpdateUser: {
+      email: 'john@doe.com',
+      name: 'John Doe',
+      password: '123123',
     }
   },
 };

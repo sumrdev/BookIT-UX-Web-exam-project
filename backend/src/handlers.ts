@@ -114,3 +114,89 @@ export const getRooms = async (req: Request, res: Response) => {
   const rooms = await prisma.room.findMany();
   return res.json(rooms);
 }
+
+export const createBooking = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/CreateBooking" }
+      } 
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  // const { body } = req;
+  // const { room, startTime, endTime } = body;
+
+  // const booking = await prisma.booking.create({
+  //   data: {
+  //     room: room,
+  //     user: user,
+  //     startTime: startTime,
+  //     endTime: endTime,
+  //   },
+  // });
+  // return res.json(booking);
+}
+
+export const getUsers = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const users = await prisma.user.findMany();
+  return res.json(users);
+}
+
+export const getUser = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const user = await prisma.user.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  return res.json(user);
+}
+export const updateUser = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/UpdateUser" }
+      } 
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  const { body } = req;
+  const { id } = req.params;
+  let { email, name, password } = body;
+  let dontHash 
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
+
+  if(!email) email = user?.email;
+  if(!name)  name = user?.name;
+  if(!password) {
+    password = user?.password;
+    dontHash = true;
+  }
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: parseInt(id),
+    },
+    data: {
+      email: email,
+      name: name,
+      password: dontHash ? password : await argon2.hash(password),
+    },
+  });
+  return res.json(updatedUser);
+}
