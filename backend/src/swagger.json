@@ -198,6 +198,44 @@
           }
         ]
       },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      },
       "put": {
         "description": "",
         "parameters": [
@@ -235,6 +273,101 @@
             }
           }
         }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/room/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoom"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoom"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/{{where{id:parseInt(id)}": {
+      "delete": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
       }
     }
   },
@@ -325,11 +458,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1684695825673
+            "example": 1684782527740
           },
           "endTime": {
             "type": "number",
-            "example": 1684699425673
+            "example": 1684786127740
           },
           "roomId": {
             "type": "number",
@@ -362,6 +495,74 @@
         },
         "xml": {
           "name": "UpdateUser"
+        }
+      },
+      "CreateUserAdmin": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@maybe.com"
+          },
+          "name": {
+            "type": "string",
+            "example": "big boss"
+          },
+          "password": {
+            "type": "string",
+            "example": "123123"
+          },
+          "admin": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "xml": {
+          "name": "CreateUserAdmin"
+        }
+      },
+      "UpdateRoom": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Auditorium 1"
+          },
+          "type": {
+            "type": "string",
+            "example": "Auditorium"
+          },
+          "capacity": {
+            "type": "number",
+            "example": 100
+          },
+          "powerOutlets": {
+            "type": "number",
+            "example": 5
+          },
+          "ethernetPorts": {
+            "type": "number",
+            "example": 5
+          },
+          "externalMonitor": {
+            "type": "boolean",
+            "example": true
+          },
+          "whiteboard": {
+            "type": "boolean",
+            "example": true
+          },
+          "eatingAllowed": {
+            "type": "boolean",
+            "example": true
+          },
+          "bookings": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "xml": {
+          "name": "UpdateRoom"
         }
       }
     },
