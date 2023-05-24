@@ -9,7 +9,7 @@ export const rootHandler = (_req: Request, res: Response) => {
   /* #swagger.security = [{
           "bearerAuth": []
   }] */
-  return res.send("API is working 🤓");
+  return res.json("aPI is working 🤓");
 };
 
 export const signupHandler = async (req: Request, res: Response) => {

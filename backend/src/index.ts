@@ -15,6 +15,16 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const secret = process.env.JWT_SECRET;
 
+import cors from 'cors';
+
+const corsOptions = {
+	origin: 'http://localhost:3001/',
+	optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -22,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 console.log(secret)
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(cors());
 app.use(
     jwt({
       secret: secret,
@@ -29,7 +40,7 @@ app.use(
       getToken: (req: any) => {
         if(req.headers.authorization) return req.headers.authorization.split(" ")[1].replace(/['"]+/g, '');
       }
-    }).unless({ path: ["/login", "/signup"] })
+    }).unless({ path: [, "/", "/login", "/signup"] })
   );
 
 app.listen(port, () => {
