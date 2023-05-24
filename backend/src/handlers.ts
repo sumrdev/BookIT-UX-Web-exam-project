@@ -113,6 +113,30 @@ export const getRooms = async (req: Request, res: Response) => {
   return res.json(rooms);
 }
 
+export const getBooking = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const booking = await prisma.booking.findFirst({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  if (!booking) {
+    return res.status(404).json({ message: "Booking not found" });
+  }
+  return res.json(booking);
+}
+
+export const getBookings = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const bookings = await prisma.booking.findMany();
+  return res.json(bookings);
+}
+
 export const createBooking = async (req: Request, res: Response) => {
   /*	#swagger.requestBody = {
             required: true,

@@ -1,5 +1,5 @@
 import { Express } from "express";
-import { updateBooking, deleteBooking, createBooking, rootHandler, loginHandler, signupHandler, createRoom, getRoom, getRooms, getUser, getUsers, updateUser, createUser, deleteUser, updateRoom, deleteRoom } from "./handlers";
+import { getBookings, getBooking, updateBooking, deleteBooking, createBooking, rootHandler, loginHandler, signupHandler, createRoom, getRoom, getRooms, getUser, getUsers, updateUser, createUser, deleteUser, updateRoom, deleteRoom } from "./handlers";
 
 function wrapTryCatch(fn: Function) {
     return async function (req: any, res: any) {
@@ -25,9 +25,9 @@ module.exports = function (app: Express) {
     //get a room by id
     app.get("/rooms/:id", getRoom);
     //get all bookings of a user
-    app.get("/booking");
+    app.get("/booking", getBookings);
     //get a booking of a user by id
-    app.get("/booking/:id");
+    app.get("/booking/:id", getBooking);
     //create a booking
     app.post("/booking", createBooking);
     //update a booking by id
