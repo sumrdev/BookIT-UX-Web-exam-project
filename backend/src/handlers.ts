@@ -246,39 +246,14 @@ export const updateRoom = async (req: Request, res: Response) => {
   */
   const { body } = req;
   const { id } = req.params;
-  let { name, type, capacity, powerOutlets, ethernetPorts, externalMonitor, whiteboard, eatingAllowed, bookings } = body;
-
-  const room = await prisma.room.findFirst({
-    where: {
-      id: parseInt(id),
-    },
-  });
-
-  if(!name) name = room?.name;
-  if(!type) type = room?.type;
-  if(!capacity) capacity = room?.capacity;
-  if(!powerOutlets) powerOutlets = room?.powerOutlets;
-  if(!ethernetPorts) ethernetPorts = room?.ethernetPorts;
-  if(!externalMonitor) externalMonitor = room?.externalMonitor;
-  if(!whiteboard) whiteboard = room?.whiteboard;
-  if(!eatingAllowed) eatingAllowed = room?.eatingAllowed;
-  // if(!bookings) bookings = room?.bookings; //TODO: this doesnt work for some reason
+  let allowedKeys = ["name", "type", "capacity", "powerOutlets", "ethernetPorts", "externalMonitor", "whiteboard", "eatingAllowed", "bookings"];
 
   const updatedRoom = await prisma.room.update({
     where: {
       id: parseInt(id),
     },
-    data: {
-      name: name,
-      type: type,
-      capacity: capacity,
-      powerOutlets: powerOutlets,
-      ethernetPorts: ethernetPorts,
-      externalMonitor: externalMonitor,
-      whiteboard: whiteboard,
-      eatingAllowed: eatingAllowed,
-      bookings: bookings,
-    },
+    // Create a new object with only the allowed keys, filter out null values
+    data: Object.fromEntries(allowedKeys.map(k => [k, body[k]]).filter(([k, v]) => v != null)),
   });
   return res.json(updatedRoom);
 }
