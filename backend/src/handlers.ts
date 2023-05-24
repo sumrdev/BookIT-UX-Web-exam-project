@@ -282,3 +282,16 @@ export const deleteRoom = async (req: Request, res: Response) => {
   });
   return res.json(room);
 }
+
+export const deleteBooking = async (req: Request, res: Response) => {
+  /* #swagger.security = [{
+          "bearerAuth": []
+  }] */
+  const { id } = req.params;
+  const booking = await prisma.booking.delete({
+    where: {
+      id: parseInt(id),
+    },
+  });
+  return res.json(booking);
+}

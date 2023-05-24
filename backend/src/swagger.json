@@ -186,6 +186,31 @@
         }
       }
     },
+    "/booking/{id}": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/user": {
       "get": {
         "description": "",
@@ -489,11 +514,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1684962534383
+            "example": 1684963364865
           },
           "endTime": {
             "type": "number",
-            "example": 1684966134383
+            "example": 1684966964865
           },
           "roomId": {
             "type": "number",
