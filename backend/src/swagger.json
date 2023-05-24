@@ -155,6 +155,37 @@
         ]
       }
     },
+    "/booking": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBooking"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBooking"
+              }
+            }
+          }
+        }
+      }
+    },
     "/user": {
       "get": {
         "description": "",
@@ -458,11 +489,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1684782527740
+            "example": 1684962534383
           },
           "endTime": {
             "type": "number",
-            "example": 1684786127740
+            "example": 1684966134383
           },
           "roomId": {
             "type": "number",

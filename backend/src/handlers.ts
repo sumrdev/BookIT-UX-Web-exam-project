@@ -122,18 +122,30 @@ export const createBooking = async (req: Request, res: Response) => {
           "bearerAuth": []
       }]
   */
-  // const { body } = req;
-  // const { room, startTime, endTime } = body;
+  const { body } = req;
+  const { roomId, userId, startTime, endTime } = body;
 
-  // const booking = await prisma.booking.create({
-  //   data: {
-  //     room: room,
-  //     user: user,
-  //     startTime: startTime,
-  //     endTime: endTime,
-  //   },
-  // });
-  // return res.json(booking);
+  const newRoom = await prisma.room.update({
+    where: {
+      id: roomId,
+    },
+    data: {
+      bookings: {
+        create: [
+          {
+            startTime: new Date(startTime),
+            endTime: new Date(endTime),
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+          },
+        ],
+      },
+    },
+  })
+  return res.json(newRoom);
 }
 
 export const createUser = async (req: Request, res: Response) => {
