@@ -187,6 +187,44 @@
       }
     },
     "/booking/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBooking"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBooking"
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "description": "",
         "parameters": [
@@ -514,11 +552,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1684963364865
+            "example": 1684964146039
           },
           "endTime": {
             "type": "number",
-            "example": 1684966964865
+            "example": 1684967746039
           },
           "roomId": {
             "type": "number",
@@ -619,6 +657,30 @@
         },
         "xml": {
           "name": "UpdateRoom"
+        }
+      },
+      "UpdateBooking": {
+        "type": "object",
+        "properties": {
+          "startTime": {
+            "type": "number",
+            "example": 1684964146039
+          },
+          "endTime": {
+            "type": "number",
+            "example": 1684967746039
+          },
+          "roomId": {
+            "type": "number",
+            "example": 1
+          },
+          "userId": {
+            "type": "number",
+            "example": 2
+          }
+        },
+        "xml": {
+          "name": "UpdateBooking"
         }
       }
     },

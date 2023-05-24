@@ -63,6 +63,12 @@ const doc = {
       eatingAllowed: true,
       bookings: {},
     },
+    UpdateBooking: {
+      startTime: Date.now(),
+      endTime: Date.now()+3600000,
+      roomId: 1,
+      userId: 2,
+    },
   },
 };
 

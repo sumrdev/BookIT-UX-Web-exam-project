@@ -269,6 +269,32 @@ export const updateRoom = async (req: Request, res: Response) => {
   });
   return res.json(updatedRoom);
 }
+export const updateBooking = async (req: Request, res: Response) => {
+  /*	#swagger.requestBody = {
+            required: true,
+            schema: { $ref: "#/definitions/UpdateBooking" }
+      } 
+      #swagger.security = [{
+          "bearerAuth": []
+      }]
+  */
+  const { body } = req;
+  const { id } = req.params;
+  let allowedKeys = ["startTime", "endTime", "roomId", "userId"];
+
+  const updatedRoom = await prisma.booking.update({
+    where: {
+      id: parseInt(id),
+    },
+    // Create a new object with only the allowed keys, filter out null values
+    data: {
+      ...Object.fromEntries(allowedKeys.map(k => [k, body[k]]).filter(([k, v]) => v != null)),
+      startTime: new Date(body.startTime),
+      endTime: new Date(body.endTime),
+    },
+  });
+  return res.json(updatedRoom);
+}
 
 export const deleteRoom = async (req: Request, res: Response) => {
   /* #swagger.security = [{
