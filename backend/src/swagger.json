@@ -600,11 +600,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685102554515
+            "example": 1685108580472
           },
           "endTime": {
             "type": "number",
-            "example": 1685106154515
+            "example": 1685112180472
           },
           "roomId": {
             "type": "number",
@@ -712,11 +712,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685102554515
+            "example": 1685108580472
           },
           "endTime": {
             "type": "number",
-            "example": 1685106154515
+            "example": 1685112180472
           },
           "roomId": {
             "type": "number",

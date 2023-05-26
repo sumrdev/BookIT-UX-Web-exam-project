@@ -19,6 +19,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => rootLayout({ page }));
  
-  return <html className={lexend.className}>{getLayout(<Component {...pageProps} />)}</html>;
+  return <main className={lexend.className}>{getLayout(<Component {...pageProps} />)}</main>;
 }
 export default App;
