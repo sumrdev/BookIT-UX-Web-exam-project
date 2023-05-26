@@ -5,7 +5,7 @@ import rootLayout from '../components/layout';
 import '../src/app/globals.css'
 import { Lexend } from 'next/font/google'
 
-const lexend = Lexend({ subsets: ['latin'] })
+const lexend = Lexend({ weight: ["300", "400", "500", "600", "700", "800", "900"], subsets: ['latin'] })
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -19,6 +19,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => rootLayout({ page }));
  
-  return <html className={lexend.className}>{getLayout(<Component {...pageProps} />)}</html>;
+  return <main className={lexend.className}>{getLayout(<Component {...pageProps} />)}</main>;
 }
 export default App;
