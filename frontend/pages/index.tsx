@@ -48,7 +48,7 @@ function Home() {
     }, [])
 
   const [filters, setFilters] = useState<string[]>([])
-  const allFilters = ["Skyboxes", "Classrooms", "Auditoriums"]
+  const allFilters = ["Skybox", "Classroom", "Auditorium"]
   function addOrRemoveFilter(filter: string) {
     if (filters.includes(filter)) {
       setFilters(prev => prev.filter(f => f !== filter))
@@ -56,7 +56,23 @@ function Home() {
       setFilters(prev => [...prev, filter])
     }
   }
+  const [rooms, setRooms] = useState<any[]>([])
   const { data, loading, error } = useDB("rooms");
+    useEffect(() => {
+        if (data) {
+            setRooms(data)
+        }
+    }, [data])
+
+    useEffect(() => {
+        if (filters.length === 0) {
+            setRooms(data)
+        } else {
+            setRooms(data.filter((room: any) => filters.includes(room.type)))
+        }
+        console.log("filters", filters)
+    }, [filters])
+
 
   return (
     <>
@@ -69,9 +85,9 @@ function Home() {
         <BoxHeaderSmall>Free now</BoxHeaderSmall>
         {loading && <div>Loading...</div>}
         {error && <div>Error: {error.message}</div>}
-        {data &&
+        {
             <RoomsBox>
-                {data.map((room: any) => (
+                {rooms.map((room: any) => (
                     <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={[
                         {
                             startTime: "2023-05-26T16:52:00.000Z",

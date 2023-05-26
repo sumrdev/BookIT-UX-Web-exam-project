@@ -35,12 +35,14 @@ const Timeline = styled.div`
     position: relative;
 `;
 
-const TimeSlot = styled.div`
+const TimeSlot = styled.div<{left: string, width: string}>`
     position: absolute;
     height: 8px;
     width: 10px;
     left: 10px;
     background-color: var(--splash);
+    left: ${props => props.left}px;
+    width: ${props => props.width}px;
 `;
 
 const Name = styled.h2`
@@ -57,7 +59,7 @@ const Info = styled.div`
     margin-bottom: 5px;
     color: var(--gray-font);
 `;    
-function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number) {
+function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number, id: number) {
     let startPercentage = (startTime.getHours() + startTime.getMinutes() / 60) / 24
     let endPercentage = (endTime.getHours() + endTime.getMinutes() / 60) / 24
     //clamp values
@@ -66,15 +68,11 @@ function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number) {
     if (endPercentage < 0) endPercentage = 0
     if (endPercentage > 1) endPercentage = 1
     if (startPercentage > endPercentage) endPercentage = startPercentage + 0.01
-    let NewTimeSlot = styled(TimeSlot)`
-        left: ${timeLineWidth * startPercentage}px;
-        width: ${
-            timeLineWidth * (endPercentage - startPercentage)
-        }px;
-    `
-    
-    return NewTimeSlot;
-}
+   
+    return (
+        <TimeSlot left={`${timeLineWidth * startPercentage}`} width={`${timeLineWidth * (endPercentage - startPercentage)}`} key={id} />
+    )
+};
 
 
 function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
@@ -84,8 +82,8 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
         if (!timelineRef.current) return
         let timeSlots: Array<any> = []
         let timeLineWidth = timelineRef.current.offsetWidth;
-        bookings.forEach((booking: any) => {
-            timeSlots.push(CreateTimeSlot(new Date(booking.startTime), new Date(booking.endTime), timeLineWidth))
+        bookings.forEach((booking: any, index: number) => {
+            timeSlots.push(CreateTimeSlot(new Date(booking.startTime), new Date(booking.endTime), timeLineWidth, index))
         })
         setTimeSlots(timeSlots)
     }, [bookings, timelineRef.current])
@@ -97,9 +95,7 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
             <Info>Fits {capacity} people</Info>
             <TimelineContainer> 
                 <Timeline ref={timelineRef}>
-                    {timeSlots.map((TimeSlot, index) => (
-                        <TimeSlot key={index} />
-                    ))}
+                    {timeSlots}
                 </Timeline>
             </TimelineContainer>
         </MainBox>
