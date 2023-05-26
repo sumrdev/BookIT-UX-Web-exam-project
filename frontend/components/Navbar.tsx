@@ -1,5 +1,4 @@
 import React from 'react'
-import { useState } from 'react'
 
 import Image from 'next/image'
 import { styled } from 'styled-components';
@@ -16,23 +15,21 @@ const Navigation = styled.div`
 
   `;
 
+  type NavbarProps = {
+    backbutton: Boolean;
+    heading: String;
+    profile: String;
+  }
 
-function Navbar(props: { backbutton: Boolean; heading: String; profile: String }) {
-  
-  const {backbutton, heading, profile} = props
-  const [back, setBack] = useState(backbutton)
-  const [head, setHead] = useState(heading)
-  const [prof, setProf] = useState(profile)
-  
-
-  let goback
-  let profileSVG
+function Navbar({ backbutton, heading, profile } : NavbarProps) {
+  let goback;
+  let profileSVG;
   // go back goes to previous page
-  back ? goback = <a onClick={() => Router.back()}><Image src='/back.svg' alt={''} width={25} height={25}></Image></a>: goback = <></>
+  backbutton ? goback = <a onClick={() => Router.back()}><Image src='/back.svg' alt={''} width={25} height={25}></Image></a>: goback = <></>
   
-  if(prof == "profile") {
+  if(profile == "profile") {
     profileSVG = <Link href="settings"><Image src='/profile.svg' alt={''} width={50} height={50}></Image></Link> 
-  } else if(prof == "settings") {
+  } else if(profile == "settings") {
     profileSVG =  <Link href="settings"><Image src='/settings.svg' alt={''} width={25} height={25}></Image></Link> 
   }
     
