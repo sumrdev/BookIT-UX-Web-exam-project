@@ -51,6 +51,7 @@ const LoginButton = styled.button`
 `;
  
 
+
 const Login: NextPageWithLayout = () => {
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -85,5 +86,13 @@ const Login: NextPageWithLayout = () => {
     </LoginContainer>
   );
 };
+
+Login.getLayout = (page) => {
+  return (
+    <div>
+      {page}
+    </div>
+  )
+}
 
 export default Login;
