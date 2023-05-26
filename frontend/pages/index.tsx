@@ -1,8 +1,9 @@
-import { use, useEffect, useState } from "react"
+import { use, useContext, useEffect, useState  } from "react"
 import { styled } from "styled-components"
 import { useDB } from "../hooks/useDB"
 import RoomInformationBox from "../components/RoomInformationBox"
-
+import NavContext from "../contexts/NavContext"
+import Link from "next/link"
 const FilterBox = styled.div`
     display: flex;
     gap: 10px;
@@ -39,6 +40,13 @@ const RoomsBox = styled.div`
 
 
 function Home() {
+  const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
+    useEffect(() => {
+        setShowBackbutton(false);
+        setHeading("Home");
+        setProfile("profile");
+    }, [])
+
   const [filters, setFilters] = useState<string[]>([])
   const allFilters = ["Skyboxes", "Classrooms", "Auditoriums"]
   function addOrRemoveFilter(filter: string) {
