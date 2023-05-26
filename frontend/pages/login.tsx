@@ -2,6 +2,7 @@ import React, { FormEvent } from 'react';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
+import { Cookie } from 'next/font/google';
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
   display: flex;
@@ -51,9 +52,6 @@ const LoginButton = styled.button`
  
 
 const Login: NextPageWithLayout = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -70,7 +68,7 @@ const Login: NextPageWithLayout = () => {
     console.log(response);
     if (response.status !== 401) {
       const result = await response.json();
-      localStorage.setItem('token', result.token);
+      document.cookie = `token=${result.token}`;
       window.location.href = "/";
     }
   };
