@@ -54,18 +54,23 @@ const Login: NextPageWithLayout = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  /* This code is boilerplate and does not work yet */
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
+    const target = event.target as typeof event.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+
     const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      body: JSON.stringify({ 'email': email, 'password': password})
+      body: JSON.stringify({ email: target.email.value, password: target.password.value})
     });
 
-    console.log(response.json());
+    console.log(response);
     if (response.status !== 401) {
       const result = await response.json();
+      localStorage.setItem('token', result.token);
       window.location.href = "/";
     }
   };
@@ -75,8 +80,8 @@ const Login: NextPageWithLayout = () => {
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
       <LoginForm onSubmit={handleLogin}>
-        <LoginInput type="email" placeholder="Email" />
-        <LoginInput type="password" placeholder="Password" />
+        <LoginInput type="email" placeholder="Email" name='email' />
+        <LoginInput type="password" placeholder="Password" name='password' />
         <LoginButton >Login</LoginButton>
       </LoginForm>
     </LoginContainer>
