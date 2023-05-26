@@ -60,7 +60,7 @@ const Login: NextPageWithLayout = () => {
       password: { value: string };
     };
 
-    const response = await fetch('http://localhost:3000/login', {
+    const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify({ email: target.email.value, password: target.password.value})
