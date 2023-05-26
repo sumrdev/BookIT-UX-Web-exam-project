@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
-
+import type { NextPageWithLayout } from './_app';
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
   display: flex;
@@ -50,12 +50,13 @@ const LoginButton = styled.button`
 `;
  
 
-const Login: React.FC = () => {
+const Login: NextPageWithLayout = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   /* This code is boilerplate and does not work yet */
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async (event: FormEvent) => {
+    event.preventDefault();
     const response = await fetch('http://localhost:3000', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,16 +68,16 @@ const Login: React.FC = () => {
       const result = await response.json();
       window.location.href = "/aaaa";
     }
-  }, [email, password]);
+  };
 
 
   return (
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
-      <LoginForm>
+      <LoginForm onSubmit={handleLogin}>
         <LoginInput type="email" placeholder="Email" />
         <LoginInput type="password" placeholder="Password" />
-        <LoginButton onClick={handleLogin}>Login</LoginButton>
+        <LoginButton >Login</LoginButton>
       </LoginForm>
     </LoginContainer>
   );
