@@ -57,16 +57,16 @@ const Login: NextPageWithLayout = () => {
   /* This code is boilerplate and does not work yet */
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-    const response = await fetch('http://localhost:3000', {
+    const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 'test@test.test': 'test'})
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ 'email': email, 'password': password})
     });
 
     console.log(response.json());
     if (response.status !== 401) {
       const result = await response.json();
-      window.location.href = "/aaaa";
+      window.location.href = "/";
     }
   };
 
