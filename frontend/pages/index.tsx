@@ -65,12 +65,12 @@ function Home() {
     }, [data])
 
     useEffect(() => {
+        if (!data || data.length == 0) return;
         if (filters.length === 0) {
-            setRooms(data)
+            if (data) setRooms(data)
         } else {
-            setRooms(data.filter((room: any) => filters.includes(room.type)))
+            if (data) setRooms(data.filter((room: any) => filters.includes(room.type)))
         }
-        console.log("filters", filters)
     }, [filters])
 
 
