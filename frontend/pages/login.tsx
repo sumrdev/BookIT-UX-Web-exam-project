@@ -79,8 +79,8 @@ const Login: NextPageWithLayout = () => {
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
       <LoginForm onSubmit={handleLogin}>
-        <LoginInput type="email" placeholder="Email" name='email' />
-        <LoginInput type="password" placeholder="Password" name='password' />
+        <LoginInput type="email" placeholder="Email" name='email' autoComplete='current-email' />
+        <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />
         <LoginButton >Login</LoginButton>
       </LoginForm>
     </LoginContainer>
