@@ -53,6 +53,7 @@ const LoginButton = styled.button`
 
 
 const Login: NextPageWithLayout = () => {
+  let user;
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
     const target = event.target as typeof event.target & {
@@ -66,9 +67,9 @@ const Login: NextPageWithLayout = () => {
       body: JSON.stringify({ email: target.email.value, password: target.password.value})
     });
 
-    console.log(response);
     if (response.status !== 401) {
       const result = await response.json();
+      user = result.user;
       document.cookie = `token=${result.token}`;
       window.location.href = "/";
     }
