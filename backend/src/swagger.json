@@ -18,6 +18,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -37,6 +40,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -63,6 +69,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -89,6 +98,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -103,6 +115,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -146,6 +161,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -162,6 +180,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -202,6 +223,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -240,6 +264,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -256,6 +283,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -284,6 +314,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -307,6 +340,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -345,6 +381,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -385,6 +424,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -410,6 +452,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -448,6 +493,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "security": [
@@ -552,11 +600,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685054897211
+            "example": 1685102335595
           },
           "endTime": {
             "type": "number",
-            "example": 1685058497211
+            "example": 1685105935595
           },
           "roomId": {
             "type": "number",
@@ -664,11 +712,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685054897211
+            "example": 1685102335595
           },
           "endTime": {
             "type": "number",
-            "example": 1685058497211
+            "example": 1685105935595
           },
           "roomId": {
             "type": "number",
