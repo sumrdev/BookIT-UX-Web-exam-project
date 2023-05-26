@@ -56,16 +56,16 @@ const Login: React.FC = () => {
 
   /* This code is boilerplate and does not work yet */
   const handleLogin = useCallback(async () => {
-    const response = await fetch('http://localhost:3000', {
+    const response = await fetch('http://localhost:3000/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 'test@test.test': 'test'})
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      body: JSON.stringify({ 'email': email, 'password': password})
     });
 
     console.log(response.json());
     if (response.status !== 401) {
       const result = await response.json();
-      window.location.href = "/aaaa";
+      window.location.href = "/";
     }
   }, [email, password]);
 
@@ -74,8 +74,8 @@ const Login: React.FC = () => {
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
       <LoginForm>
-        <LoginInput type="email" placeholder="Email" />
-        <LoginInput type="password" placeholder="Password" />
+        <LoginInput value={email} type="email" placeholder="Email"  />
+        <LoginInput value={password} type="password" placeholder="Password" />
         <LoginButton onClick={handleLogin}>Login</LoginButton>
       </LoginForm>
     </LoginContainer>
