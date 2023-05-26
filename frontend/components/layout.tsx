@@ -1,9 +1,9 @@
-
+import Navbar from "./Navbar"
 
 export default function rootLayout({page}: {page: React.ReactNode}) {
   return (
     <>
-      <div>Navbar</div>
+      <Navbar backbutton heading="Room info" profile="profile"></Navbar>
       <div >{page}</div>
     </>
   )
