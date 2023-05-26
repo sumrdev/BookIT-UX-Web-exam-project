@@ -9,6 +9,7 @@ function useDB(apiPath: string) {
     useEffect(() => {
         (async function fetchData() {
             try {
+                if (apiPath === "") return
                 const token = document.cookie.split("=")[1];
                 if (!token) throw new Error("Unauthorized");
                 setLoading(true)

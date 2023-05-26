@@ -2,20 +2,24 @@
 
 import { styled } from "styled-components"
 import { useEffect, useRef, useState } from "react"
+import Link from "next/link";
 type props = {
     name: string,
     type: string,
     capacity: number,
     bookings: Array<any>,
+    id: number
 }
 
-const MainBox = styled.div`
+const MainBox = styled(Link)`
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: white;
     width: 100%;
+    text-decoration: none;
+    color: black;
 `;
 const TimelineContainer = styled.div`
     width: 100%;
@@ -73,7 +77,7 @@ function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number) {
 }
 
 
-function RoomInformationBox({ name, type, capacity, bookings }: props) {
+function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
     const [ timeSlots, setTimeSlots ] = useState<Array<any>>([])
     const timelineRef = useRef<HTMLHeadingElement>(null);
     useEffect(() => {
@@ -87,18 +91,18 @@ function RoomInformationBox({ name, type, capacity, bookings }: props) {
     }, [bookings, timelineRef.current])
 
   return (
-    <MainBox>
-        <Name>{name}</Name>
-        <Info>Type: {type}</Info>
-        <Info>Fits {capacity} people</Info>
-        <TimelineContainer> 
-            <Timeline ref={timelineRef}>
-                {timeSlots.map((TimeSlot, index) => (
-                    <TimeSlot key={index} />
-                ))}
-            </Timeline>
-        </TimelineContainer>
-    </MainBox>
+        <MainBox href={`/room/${id}`}>
+            <Name>{name}</Name>
+            <Info>Type: {type}</Info>
+            <Info>Fits {capacity} people</Info>
+            <TimelineContainer> 
+                <Timeline ref={timelineRef}>
+                    {timeSlots.map((TimeSlot, index) => (
+                        <TimeSlot key={index} />
+                    ))}
+                </Timeline>
+            </TimelineContainer>
+        </MainBox>
   )
 }
 

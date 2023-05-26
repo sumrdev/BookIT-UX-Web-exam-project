@@ -72,7 +72,7 @@ function Home() {
         {data &&
             <RoomsBox>
                 {data.map((room: any) => (
-                    <RoomInformationBox key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={[
+                    <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={[
                         {
                             startTime: "2023-05-26T16:52:00.000Z",
                             endTime:   "2023-05-26T21:52:00.000Z",
