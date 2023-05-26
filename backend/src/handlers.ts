@@ -10,7 +10,7 @@ export const rootHandler = (_req: Request, res: Response) => {
           "bearerAuth": []
   }] */
   try {
-    return res.json("aPI is working 🤓");
+    return res.json({message: "aPI is working 🤓"});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
@@ -35,7 +35,7 @@ export const signupHandler = async (req: Request, res: Response) => {
         password: await argon2.hash(password),
       },
     });
-    return res.json(token);
+    return res.json({token: token});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
@@ -69,7 +69,7 @@ export const loginHandler = async (req: Request, res: Response) => {
         expiresIn: "1h",
       }
     );
-    return res.json(token);
+    return res.json({token: token});
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Something went wrong" });
