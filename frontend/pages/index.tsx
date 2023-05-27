@@ -36,11 +36,12 @@ const RoomsBox = styled.div`
 
 function Home() {
   const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
-    useEffect(() => {
+  const userData = useDB("getMyUser");
+  useEffect(() => {
         setShowBackbutton(false);
-        setHeading("Home");
+        setHeading(userData.data?.name || "Home");
         setProfile("profile");
-    }, [])
+}, [userData])
 
   const [filters, setFilters] = useState<string[]>([])
   const allFilters = ["Skybox", "Classroom", "Auditorium"]
