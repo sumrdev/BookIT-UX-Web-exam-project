@@ -1,5 +1,5 @@
 import NavContext from "../contexts/NavContext"
-import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import React, { useState, useContext, useEffect, FormEvent } from 'react';
 import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
@@ -86,14 +86,43 @@ const DeleteAccountButton = styled.button`
   margin-bottom: 1rem;
 `;
 
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+`;
+
+const PopupContent = styled.div`
+  background: white;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 10px;
+  max-width: 20rem;
+  width: 80%;
+`;
+
 function settings() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
+    
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    };
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    };
+    
     useEffect(() => {
         document.body.style.overflow = 'hidden';
         setShowBackbutton(true);
         setHeading("User settings");
         setProfile("");
-
         return () => {
           document.body.style.overflow = 'unset';
         };
@@ -107,16 +136,42 @@ function settings() {
           password: { value: string };
         };
 
-        console.log('http://localhost:4000/user/'+user.id);
         if (target.email.value || target.username.value || target.password.value) {
+          const token = document.cookie.split("=")[1];
           const response = await fetch('http://localhost:4000/user/' + user.id, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Authorization': "Bearer " + token},
             body: JSON.stringify({ email: target.email.value, name: target.username.value, password: target.password.value})
           });
+          toast.success("Your settings have been changed!")
         } else {
-          toast('You need to change atleast one value!')
+          toast('You need to change at least one value!')
         }
+    }
+    
+    const deleteAccount = async (event: FormEvent) => {
+      event.preventDefault();
+      const token = document.cookie.split("=")[1];
+      const response = await fetch('http://localhost:4000/users/' + user.id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*', 'Authorization': "Bearer " + token },
+      });
+
+      if (response.status !== 200) {
+
+        toast.error("Something went wrong!")
+        return;
+      } else {
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        window.location = '/';
+      }
+    }
+
+    const logOut = async (event: FormEvent) => {
+      event.preventDefault();
+      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      toast.success("Logging out...");
+      window.location = '/';
     }
 
     const {data, loading, error} = useDB("getMyUser");
@@ -141,8 +196,22 @@ function settings() {
         <Toaster />
       </LoginForm>
       <BottomSection>
-        <DeleteAccountButton>Delete Account</DeleteAccountButton>
-        <SmallButton>Log out</SmallButton>
+        <DeleteAccountButton onClick={openPopup}>
+          Delete Account
+        </DeleteAccountButton>
+
+        {isPopupOpen && (
+          <PopupOverlay>
+            <PopupContent>
+              <h4>Do you want to delete your account permanently? This cannot be reverted</h4>
+              <SaveButton onClick={deleteAccount}>Yes, delete my account</SaveButton>
+              <h4></h4>
+              <SaveButton onClick={closePopup}>No, take me back!</SaveButton>
+            </PopupContent>
+          </PopupOverlay>
+        )}
+
+        <SmallButton onClick={logOut}>Log out</SmallButton>
       </BottomSection>
     </LoginContainer>
   );
