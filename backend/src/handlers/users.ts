@@ -100,6 +100,21 @@ export const deleteUser = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
       if (req.auth.id !== parseInt(id) && !req.auth.isAdmin == true) return res.status(401).json({ message: "Unauthorized" });
+
+      //delete bookings 
+      const bookings = await prisma.booking.findMany({
+        where: {
+          userId: parseInt(id),
+        },
+      });
+      for (const booking of bookings) {
+        await prisma.booking.delete({
+          where: {
+            id: booking.id,
+          },
+        });
+      }
+
       const user = await prisma.user.delete({
         where: {
           id: parseInt(id),
