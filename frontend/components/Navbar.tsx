@@ -13,8 +13,6 @@ const Navigation = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 10vh;
-  background-color: #f0f4f4; /* Page background color */
-
   `;
 
 

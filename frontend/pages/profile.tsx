@@ -1,10 +1,12 @@
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import Image from 'next/image'
 import Booking from "../components/Booking"
 import NavContext from "../contexts/NavContext"
+import UserContext from "../contexts/UserContext"
 import { styled } from "styled-components";
+import { useDB } from "../hooks/useDB";
 
-const Profile = styled.div`
+const ProfileDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,18 +44,31 @@ const Heading4 = styled.h4`
 `;
 
 
-function profile() {
+function Profile() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
+    const {userID} = useContext(UserContext);
+
+    const {data, loading, error} = useDB("user/" + userID);
+    const [bookings, setBookings] = useState();
+    //get user info from backend
+
     useEffect(() => {
         setShowBackbutton(true);
         setHeading("Profile");
         setProfile("settings");
-    }, [])
+    })
+    useEffect(() => {
+        setBookings(data.bookings);
+    }, [data])
+
+    console.log(bookings)
+
     return (
-    <Profile>
+    <ProfileDiv>
     <UserInfo>
         <Image src='/profile.svg' alt={''} width={50} height={50}></Image>
         <div>
+            {userID}
             <Heading3>David Marius Feliksen</Heading3>
             <Heading4>Role: TA</Heading4>
             <Heading4>Bookings: 2</Heading4>
@@ -62,10 +77,12 @@ function profile() {
 
     <BookedRooms>
     <Heading3>Your booked rooms</Heading3>
-    <Booking></Booking>
+    {bookings && bookings.map((booking) => ( 
+        <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} ></Booking>
+    ))}
     </BookedRooms>
-    </Profile>
+    </ProfileDiv>
     )
 }
 
-export default profile
+export default Profile

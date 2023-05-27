@@ -1,8 +1,11 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useContext } from 'react';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
+import { Cookie } from 'next/font/google';
+import UserContext from '../contexts/UserContext';
+
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
   display: flex;
@@ -42,6 +45,7 @@ const LoginInput = styled.input`
 
 
 const Login: NextPageWithLayout = () => {
+  const {setUserID, userID} = useContext(UserContext);
   let user;
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -59,6 +63,9 @@ const Login: NextPageWithLayout = () => {
     if (response.status !== 401) {
       const result = await response.json();
       user = result.user;
+      setUserID(user.id);
+      console.log(userID)
+      console.log(user.id)
       document.cookie = `token=${result.token}`;
       window.location.href = "/";
     }
@@ -68,6 +75,7 @@ const Login: NextPageWithLayout = () => {
   return (
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
+      {userID}
       <LoginForm onSubmit={handleLogin}>
         <LoginInput type="email" placeholder="Email" name='email' autoComplete='current-email' />
         <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />

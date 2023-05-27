@@ -256,11 +256,19 @@ export const getUser = async (req: Request, res: Response) => {
           "bearerAuth": []
   }] */
   try {
+    //include bookings
     const { id } = req.params;
     const user = await prisma.user.findFirst({
       where: {
-        id: parseInt(id),
+        id: parseInt(id), 
       },
+      include: {
+        bookings: {
+          include: {
+            room: true,
+        },
+      }, 
+    },
     });
     if (!user) {
       return res.status(404).json({ message: "User not found" });

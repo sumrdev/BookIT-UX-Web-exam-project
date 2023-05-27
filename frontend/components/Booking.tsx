@@ -1,6 +1,8 @@
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
-const BookingBox = styled.div`
+const BookingBox = styled.a`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -10,6 +12,8 @@ const BookingBox = styled.div`
     width: 90%;
     padding: 15px;
     border-radius: 10px;
+    text-decoration: none;
+    color: black;
 `;
 
 const Times = styled.div`
@@ -26,26 +30,34 @@ const P = styled.p`
 
 
 
-function Booking (booking: Object){
-    const {type, name, start, end} = booking;
+function Booking ({type, name, start, end, id}: {type: string, name: string, start: number, end: number, id: number}){
 
-    const upcoming =   end > Date.now() ? " Upcoming" : " Past";
+    const [upcoming, setUpcoming] = useState(type);
+    const [startTime, setStartTime] = useState(new Date(start).toLocaleTimeString().replace(/:[^:]*$/, ''));
+    const [endTime, setEndTime] = useState(new Date(end).toLocaleTimeString().replace(/:[^:]*$/, ''));
+    console.log(start, end)
+    useEffect(() => {
+        end > Date.now() ? setUpcoming("Upcoming") : setUpcoming("Past");
+        setEndTime(new Date(end).toLocaleTimeString().replace(/:[^:]*$/, ''));
+    }, [])
+    
+    //replaces the seconds and milliseconds with nothing
 
     return (
-        <BookingBox>
+        <BookingBox href="">
             <div>
                 {type}
                 <br />
                 {name}
             </div>
             <Times>
-                {start}
+                {startTime}
                 <br />
                 <P>|</P>
-                {end}
+                {endTime}
             </Times>
             <div>
-                Upcoming
+                {upcoming}
             </div>
         </BookingBox>
     )
