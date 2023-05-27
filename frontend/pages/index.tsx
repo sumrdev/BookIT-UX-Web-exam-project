@@ -19,8 +19,11 @@ const Filter = styled.div`
     background-color: white;
     color: black;
     padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    border: none;
     &.active {
-        background-color: var(--background);
+        background-color: var(--light-accent);
     }
 `
 
