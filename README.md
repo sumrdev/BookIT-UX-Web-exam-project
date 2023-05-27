@@ -1,6 +1,9 @@
 # ux-web-exam
 
 # Setup
+In the root of the project, run `docker compose up`. Now you should
+have a frontend listening on port 3000 localhost, and a backend listening
+on port 4000.
 
 ### Prerequisites
 Install Node: >= 14.17
