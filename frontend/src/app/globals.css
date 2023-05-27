@@ -3,6 +3,9 @@ html, body {
   --background-light: #FFFFFF;
   --splash: #DE6262;
   --gray-font: #656565;
+  --secondary-splash: #62A3DE;
+  --highlight: #FFF9C4;
+  --light-accent: #F0F8FF;
   margin: 0;
   padding: 0;
   background-color: var(--background);
@@ -15,4 +18,11 @@ main {
 
 * {
   box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--light-accent) inset !important;
 }
