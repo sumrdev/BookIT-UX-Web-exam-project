@@ -93,14 +93,14 @@ export const deleteBooking = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
 
-      if(req.auth.id!==id && req.auth.isAdmin===false){{
-        return res.status(401).json({ message: "Unauthorized" }
-      )}};
       const booking = await prisma.booking.delete({
         where: {
           id: parseInt(id),
         },
       });
+      if(req.auth.id!==booking.userId && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}};
       return res.json(booking);
     } catch (error) {
       console.log(error);
