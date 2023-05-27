@@ -11,7 +11,7 @@ const ProfileDiv = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    background-color: #f0f4f4; /* Page background color */
+    background-color: var(--background);
     margin-top: 15px;
 `;
 
@@ -20,7 +20,7 @@ const UserInfo = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 15px;
-    background-color: #f0f4f4; /* Page background color */
+    background-color: var(--background);
     self-align: center;
 `;
 
@@ -30,7 +30,7 @@ const BookedRooms = styled.div`
     align-items: center;
     justify-content: center;
     gap: 15px;
-    background-color: #f0f4f4; /* Page background color */
+    background-color: var(--background);
     margin-top: 15px;
     width: 100%;
 `;

@@ -14,14 +14,14 @@ const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f4f4; /* Page background color */
+  background-color: var(--background);
 `;
 
 const LogoTitle = styled.h1`
-  color: #000000; /* Set color as needed */
-  font-size: 3rem; /* Adjust font size as needed */
-  margin-bottom: 1rem; /* Adjust margin as needed */
-  font-family: 'Lexend', sans-serif; /* Add this line */
+  color: #000000;
+  font-size: 3rem; 
+  margin-bottom: 1rem; 
+  font-family: 'Lexend', sans-serif;
 `;
 
 const LoginForm = styled.form`
@@ -31,7 +31,7 @@ const LoginForm = styled.form`
   max-width: 400px;
   padding: 2rem;
   border-radius: 10px;
-  background-color: #f0f4f4; /* Same color as LoginContainer background */
+  background-color: var(--background);
 `;
 
 const LoginInput = styled.input`
@@ -40,9 +40,6 @@ const LoginInput = styled.input`
   border-radius: 5px;
   border: 1px solid #ced4da;
 `;
-
-
- 
 
 
 const Login: NextPageWithLayout = () => {

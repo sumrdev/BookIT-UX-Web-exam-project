@@ -13,6 +13,8 @@ const Navigation = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 10vh;
+  background-color: var(--background);
+  font-family: 'Lexend', sans-serif;
   `;
 
 

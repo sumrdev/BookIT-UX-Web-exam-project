@@ -4,6 +4,7 @@ import { useDB } from "../hooks/useDB"
 import RoomInformationBox from "../components/RoomInformationBox"
 import NavContext from "../contexts/NavContext"
 import { BoxHeaderSmall } from "../components/styled/headers"
+
 const FilterBox = styled.div`
     display: flex;
     gap: 10px;
@@ -11,6 +12,7 @@ const FilterBox = styled.div`
     justify-content: center;
     color: black;
     margin-bottom: 30px;
+    background-color: var(--background);
 `        
 
 const Filter = styled.div`
@@ -18,7 +20,7 @@ const Filter = styled.div`
     color: black;
     padding: 4px 10px;
     &.active {
-        background-color: gray;
+        background-color: var(--background);
     }
 `
 
