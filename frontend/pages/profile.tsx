@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react"
 import Image from 'next/image'
 import Booking from "../components/Booking"
 import NavContext from "../contexts/NavContext"
-import UserContext from "../contexts/UserContext"
 import { styled } from "styled-components";
 import { useDB } from "../hooks/useDB";
 
@@ -47,37 +46,42 @@ const Heading4 = styled.h4`
 function Profile() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
 
-    const {data, loading, error} = useDB("user/" + 8);
-    const [bookings, setBookings] = useState();
-    //get user info from backend
+    const {data, loading, error} = useDB("getMyUser");
+
+    const [user, setUser] = useState({});
+    const [bookedLength, setBookedLength] = useState(0);
+
 
     useEffect(() => {
         setShowBackbutton(true);
         setHeading("Profile");
         setProfile("settings");
-    })
-    useEffect(() => {
-        setBookings(data.bookings);
+        setUser(data);
     }, [data])
 
+
     return (
+    <>
     <ProfileDiv>
     <UserInfo>
         <Image src='/profile.svg' alt={''} width={50} height={50}></Image>
+        {
         <div>
-            <Heading3>David Marius Feliksen</Heading3>
-            <Heading4>Role: TA</Heading4>
-            <Heading4>Bookings: 2</Heading4>
+            <Heading3>{user.name}</Heading3>
+            <Heading4>Role: {user.role}</Heading4>
+            <Heading4>Bookings: {user.bookings && user.bookings.length}</Heading4>
         </div>
+        }
     </UserInfo>
 
     <BookedRooms>
-    <Heading3>Your booked rooms</Heading3>
-    {bookings && bookings.map((booking) => ( 
-        <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} ></Booking>
-    ))}
-    </BookedRooms>
+        <Heading3>Your booked rooms</Heading3>
+            {user  && user.bookings && user.bookings.map((booking) => ( 
+                <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} ></Booking>
+            ))}
+        </BookedRooms>
     </ProfileDiv>
+    </>
     )
 }
 

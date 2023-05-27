@@ -5,8 +5,8 @@ import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
 import { Cookie } from 'next/font/google';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-/* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -38,6 +38,13 @@ const LoginInput = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ced4da;
+  border: none;
+`;
+
+const LoginHint = styled.p`
+  margin-top: 0px;
+  text-align: center;
+  font-size: 13px;
 `;
 
 
@@ -72,6 +79,7 @@ const Login: NextPageWithLayout = () => {
       <LoginForm onSubmit={handleLogin}>
         <LoginInput type="email" placeholder="Email" name='email' autoComplete='current-email' />
         <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />
+        <LoginHint>or create an account <Link href="/signup" className='link-class'>here</Link></LoginHint>
         <SmallButton>Login</SmallButton>
       </LoginForm>
     </LoginContainer>

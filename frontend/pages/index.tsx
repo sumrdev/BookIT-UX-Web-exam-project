@@ -19,8 +19,11 @@ const Filter = styled.div`
     background-color: white;
     color: black;
     padding: 4px 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    border: none;
     &.active {
-        background-color: var(--background);
+        background-color: var(--light-accent);
     }
 `
 
@@ -36,11 +39,12 @@ const RoomsBox = styled.div`
 
 function Home() {
   const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
-    useEffect(() => {
+  const userData = useDB("getMyUser");
+  useEffect(() => {
         setShowBackbutton(false);
-        setHeading("Home");
+        setHeading(userData.data?.name || "Home");
         setProfile("profile");
-    }, [])
+}, [userData])
 
   const [filters, setFilters] = useState<string[]>([])
   const allFilters = ["Skybox", "Classroom", "Auditorium"]

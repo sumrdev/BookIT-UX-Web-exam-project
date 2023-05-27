@@ -1,6 +1,6 @@
 import { Express } from "express";
 import { rootHandler } from "./handlers/others";
-import { loginHandler, signupHandler, createUser,deleteUser,getUser,getUsers,updateUser } from "./handlers/users";
+import { loginHandler, signupHandler, createUser,deleteUser,getUser,getUsers,updateUser, getMyUser } from "./handlers/users";
 import { getRooms, getRoom, createRoom, deleteRoom, updateRoom } from "./handlers/rooms";
 import { createBooking, updateBooking, deleteBooking } from "./handlers/bookings";
 
@@ -24,6 +24,8 @@ module.exports = function (app: Express) {
     app.post("/login", loginHandler);
     //create a user, returns a jwt token
     app.post("/signup", signupHandler);
+    //get your own user
+    app.get("/getMyUser", getMyUser);
     //get all rooms
     app.get("/rooms", getRooms);
     //get a room by id

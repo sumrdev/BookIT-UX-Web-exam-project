@@ -202,4 +202,33 @@ export const deleteUser = async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Something went wrong" });
     }
   };
+
+  export const getMyUser = async (req: Request, res: Response) => {
+    /* #swagger.security = [{
+            "bearerAuth": []
+    }] */
+    try {
+      //include bookings
+      const { id } = req.auth;
+      const user = await prisma.user.findFirst({
+        where: {
+          id: parseInt(id), 
+        },
+        include: {
+          bookings: {
+            include: {
+              room: true,
+          },
+        }, 
+      },
+      });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.json(user);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  }
   
