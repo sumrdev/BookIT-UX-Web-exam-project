@@ -77,8 +77,10 @@ function roomID({}) {
             });
         });
         finalBookings = meargeBookings(finalBookings);
+
         const token = document.cookie.split("=")[1];
-        await fetch("http://localhost:4000/booking/many", {
+        if(finalBookings.length > 1) {
+            await fetch("http://localhost:4000/booking/many", {
                 method: "POST",
                 body: JSON.stringify({bookings: finalBookings}),
                 headers: {
@@ -86,7 +88,16 @@ function roomID({}) {
                     'Authorization': "Bearer " + token,
                 },
             });
-    
+        } else {
+            await fetch("http://localhost:4000/booking", {
+                method: "POST",
+                body: JSON.stringify(finalBookings[0]),
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': "Bearer " + token,
+                },
+            });
+        }
         router.push("/");
     }
 
