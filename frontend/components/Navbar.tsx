@@ -10,7 +10,7 @@ import NavContext from '../contexts/NavContext';
 const Navigation = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 10vh;
   background-color: var(--background);

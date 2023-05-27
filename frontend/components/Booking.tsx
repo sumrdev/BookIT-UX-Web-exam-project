@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
 const ContainsCancel = styled.div`
-    width: 90%;
+    width: 100%;
     background-color: #ffffff; 
     margin-top: 15px;
     padding: 15px;

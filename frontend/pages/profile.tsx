@@ -20,7 +20,8 @@ const UserInfo = styled.div`
     align-items: center;
     gap: 15px;
     background-color: var(--background);
-    self-align: center;
+    margin-right: auto;
+
 `;
 
 const BookedRooms = styled.div`
@@ -28,7 +29,6 @@ const BookedRooms = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
     background-color: var(--background);
     margin-top: 15px;
     width: 100%;
@@ -36,6 +36,7 @@ const BookedRooms = styled.div`
 
 const Heading3 = styled.h3`
     margin: 5px;
+    margin-right: auto;
 `;
 
 const Heading4 = styled.h4`
