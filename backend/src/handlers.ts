@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { expressjwt, Request as JWTRequest } from "express-jwt";
+import { expressjwt, Request } from "express-jwt";
 var jwt = require("jsonwebtoken");
 import argon2 from "argon2";
 const prisma = new PrismaClient();
@@ -25,15 +25,15 @@ export const signupHandler = async (req: Request, res: Response) => {
   try {
     const { body } = req;
     const { email, name, password } = body;
-    const token = jwt.sign({ email, name }, process.env.JWT_SECRET as string, {
-      expiresIn: "1h",
-    });
     const user = await prisma.user.create({
       data: {
         email: email,
         name: name,
         password: await argon2.hash(password),
       },
+    });
+    const token = jwt.sign({ email, name, id:user.id, role: user.admin }, process.env.JWT_SECRET as string, {
+      expiresIn: "1h",
     });
     return res.json({token: token, user: user});
   } catch (error) {
