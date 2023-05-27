@@ -1,11 +1,10 @@
 import React, { FormEvent, useContext } from 'react';
-import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
-import { Cookie } from 'next/font/google';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -64,11 +63,14 @@ const Login: NextPageWithLayout = () => {
       body: JSON.stringify({ email: target.email.value, password: target.password.value})
     });
 
-    if (response.status !== 401) {
+    if (response.status !== 401 && response.status !== 500) {
       const result = await response.json();
       user = result.user;
       document.cookie = `token=${result.token}`;
       router.push('/');
+    } else {
+      toast.error("Sign in failed!");
+      return;
     }
   };
 
@@ -81,6 +83,7 @@ const Login: NextPageWithLayout = () => {
         <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />
         <LoginHint>or create an account <Link href="/signup" className='link-class'>here</Link></LoginHint>
         <SmallButton>Login</SmallButton>
+        <Toaster />
       </LoginForm>
     </LoginContainer>
   );
