@@ -26,3 +26,12 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--light-accent) inset !important;
 }
+
+.link-class {
+  color: var(--splash);
+  text-decoration: none;
+}
+
+.link-class:hover {
+  color: red;
+}

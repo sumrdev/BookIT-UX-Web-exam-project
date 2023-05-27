@@ -6,6 +6,7 @@ import { SmallButton } from '../components/styled/buttons';
 import { Cookie } from 'next/font/google';
 import { useRouter } from 'next/router';
 import toast, { Toaster } from 'react-hot-toast';
+import Link from 'next/link';
 
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
@@ -39,8 +40,8 @@ const LoginInput = styled.input`
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ced4da;
+  border: none;
 `;
-
 
 const Signup: NextPageWithLayout = () => {
   const router = useRouter();
@@ -86,6 +87,7 @@ const Signup: NextPageWithLayout = () => {
               <LoginInput type="username" placeholder="Username" name='username' />
               <LoginInput type="password" placeholder="Password" name='password' autoComplete='new-password' />
               <LoginInput type="password" placeholder="Repeat Password" name='repeat_password' autoComplete='new-password' />
+              <p style={{marginTop: '0px', textAlign: 'center', fontSize: 13}}>or sign in <Link href="/login" className="link-class">here</Link></p>
               <SmallButton>Sign up</SmallButton>
           </LoginForm>
           <Toaster />
