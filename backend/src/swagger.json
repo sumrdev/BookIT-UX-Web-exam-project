@@ -235,6 +235,46 @@
         }
       }
     },
+    "/booking/many": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMultipleBookings"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMultipleBookings"
+              }
+            }
+          }
+        }
+      }
+    },
     "/booking/{id}": {
       "put": {
         "description": "",
@@ -645,19 +685,15 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685216989631
+            "example": 1685223445087
           },
           "endTime": {
             "type": "number",
-            "example": 1685220589631
+            "example": 1685227045087
           },
           "roomId": {
             "type": "number",
             "example": 1
-          },
-          "userId": {
-            "type": "number",
-            "example": 2
           }
         },
         "xml": {
@@ -757,11 +793,11 @@
         "properties": {
           "startTime": {
             "type": "number",
-            "example": 1685216989631
+            "example": 1685223445087
           },
           "endTime": {
             "type": "number",
-            "example": 1685220589631
+            "example": 1685227045087
           },
           "roomId": {
             "type": "number",

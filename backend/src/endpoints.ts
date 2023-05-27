@@ -2,7 +2,7 @@ import { Express } from "express";
 import { rootHandler } from "./handlers/others";
 import { loginHandler, signupHandler, createUser,deleteUser,getUser,getUsers,updateUser, getMyUser } from "./handlers/users";
 import { getRooms, getRoom, createRoom, deleteRoom, updateRoom } from "./handlers/rooms";
-import { createBooking, updateBooking, deleteBooking } from "./handlers/bookings";
+import { createBooking, updateBooking, deleteBooking, createMultipleSegmentBooking } from "./handlers/bookings";
 
 
 function wrapTryCatch(fn: Function) {
@@ -36,6 +36,8 @@ module.exports = function (app: Express) {
     app.get("/booking/:id");
     //create a booking
     app.post("/booking", createBooking);
+    //create multiple segment booking
+    app.post("/booking/many", createMultipleSegmentBooking );
     //update a booking by id
     app.put("/booking/:id", updateBooking);
     //delete a booking by id

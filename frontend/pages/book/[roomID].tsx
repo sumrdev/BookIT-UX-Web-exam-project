@@ -73,9 +73,9 @@ function roomID({}) {
         });
         finalBookings = meargeBookings(finalBookings);
         const token = document.cookie.split("=")[1];
-        await fetch("http://localhost:4000/booking", {
+        await fetch("http://localhost:4000/booking/many", {
                 method: "POST",
-                body: JSON.stringify(finalBookings),
+                body: JSON.stringify({bookings: finalBookings}),
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': "Bearer " + token,

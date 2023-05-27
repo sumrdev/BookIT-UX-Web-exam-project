@@ -168,7 +168,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     try {
       const { body } = req;
       const { id } = req.params;
-      if (req.auth.id !== parseInt(id) && !req.auth.isAdmin == true) return res.status(401).json({ message: "Unauthorized" });
+      if (req.auth.id !== parseInt(id) && req.auth.isAdmin == false) return res.status(401).json({ message: "Unauthorized" });
 
       let { email, name, password } = body;
       let dontHash;

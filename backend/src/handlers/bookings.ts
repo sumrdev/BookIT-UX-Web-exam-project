@@ -45,6 +45,61 @@ export const createBooking = async (req: Request, res: Response) => {
       return res.status(500).json({ message: "Something went wrong" });
     }
   };
+
+  export const createMultipleSegmentBooking = async (req: Request, res: Response) => {
+    /*	#swagger.requestBody = {
+              required: true,
+              schema: { $ref: "#/definitions/CreateMultipleBookings" }
+        }
+        #swagger.security = [{
+            "bearerAuth": []
+        }]
+    */
+    try {
+      const { body } = req;
+      const { bookings } = body;
+      const validateRoomID = bookings[0].roomId;
+
+      if(!req.auth.id && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}}; 
+
+      if(bookings.length < 2) return res.status(400).json({ message: "You must provide at least 2 bookings" });
+
+      bookings.forEach((booking: { roomId: any; }) => {
+        if(booking.roomId !== validateRoomID) return res.status(400).json({ message: "All bookings must be for the same room" })
+      });
+
+      const newBookings = bookings.map((booking: any) => {
+        return {
+          startTime: new Date(booking.startTime),
+          endTime: new Date(booking.endTime),
+          user: {
+            connect: {
+              id: req.auth.id,
+            },
+          },
+        };
+      });
+
+
+      const newRoom = await prisma.room.update({
+        where: {
+          id: validateRoomID,
+        },
+        data: {
+          bookings: {
+            create: newBookings,
+          },
+        },
+      });
+      return res.json(newRoom);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  };
+
   
 export const updateBooking = async (req: Request, res: Response) => {
     /*	#swagger.requestBody = {
