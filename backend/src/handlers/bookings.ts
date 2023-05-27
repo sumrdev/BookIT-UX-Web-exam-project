@@ -16,6 +16,10 @@ export const createBooking = async (req: Request, res: Response) => {
       const { body } = req;
       const { roomId, userId, startTime, endTime } = body;
   
+      if(req.auth.id!==userId && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}}; 
+
       const newRoom = await prisma.room.update({
         where: {
           id: roomId,
@@ -56,6 +60,10 @@ export const updateBooking = async (req: Request, res: Response) => {
       const { body } = req;
       const { id } = req.params;
       let allowedKeys = ["startTime", "endTime", "roomId", "userId"];
+
+      if(req.auth.id!==id && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}};
   
       const updatedRoom = await prisma.booking.update({
         where: {
@@ -84,6 +92,10 @@ export const deleteBooking = async (req: Request, res: Response) => {
     }] */
     try {
       const { id } = req.params;
+
+      if(req.auth.id!==id && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}};
       const booking = await prisma.booking.delete({
         where: {
           id: parseInt(id),
