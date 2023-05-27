@@ -5,6 +5,7 @@ import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
 import { Cookie } from 'next/font/google';
 import UserContext from '../contexts/UserContext';
+import { useRouter } from 'next/router';
 
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
@@ -46,6 +47,7 @@ const LoginInput = styled.input`
 
 const Login: NextPageWithLayout = () => {
   const {setUserID, userID} = useContext(UserContext);
+  const router = useRouter();
   let user;
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -67,7 +69,7 @@ const Login: NextPageWithLayout = () => {
       console.log(userID)
       console.log(user.id)
       document.cookie = `token=${result.token}`;
-      window.location.href = "/";
+      router.push('/');
     }
   };
 
