@@ -58,8 +58,7 @@ const Cancel = styled.button`
 
 
 
-function Booking ({type, name, start, end, id}: {type: string, name: string, start: number, end: number, id: number}){
-
+function Booking ({type, name, start, end, id, refetch}: {type: string, name: string, start: number, end: number, id: number, refetch: any}){
     const [upcoming, setUpcoming] = useState(type);
     const [startTime, setStartTime] = useState(new Date(start).toLocaleTimeString().replace(/:[^:]*$/, ''));
     const [endTime, setEndTime] = useState(new Date(end).toLocaleTimeString().replace(/:[^:]*$/, ''));
@@ -75,15 +74,15 @@ function Booking ({type, name, start, end, id}: {type: string, name: string, sta
     }
     const token = document.cookie.split("=")[1];
 
-    function cancelBooking(){
-        fetch(`http://localhost:4000/booking/${id}`,{
+    async function cancelBooking(){
+        await fetch(`http://localhost:4000/booking/${id}`,{
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': "Bearer " + token, // notice the Bearer before your token
             },
         })
-        window.location.reload();
+        refetch();
     }
 
     //replaces the seconds and milliseconds with nothing

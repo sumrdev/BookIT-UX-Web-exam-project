@@ -51,14 +51,13 @@ type user = {
 function Profile() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
 
-    const {data, loading, error} = useDB("getMyUser");
+    const {data, loading, error, fetchData } = useDB("getMyUser");
 
     const [user, setUser] = useState<user>({
         name: "",
         role: "",
         bookings: [],
     });
-    const [bookedLength, setBookedLength] = useState(0);
 
 
     useEffect(() => {
@@ -86,7 +85,7 @@ function Profile() {
     <BookedRooms>
         <Heading3>Your booked rooms</Heading3>
             {user  && user.bookings && user.bookings.map((booking) => ( 
-                <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} ></Booking>
+                <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} refetch={fetchData} ></Booking>
             ))}
         </BookedRooms>
     </ProfileDiv>
