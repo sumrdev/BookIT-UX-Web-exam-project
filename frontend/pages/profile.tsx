@@ -46,9 +46,8 @@ const Heading4 = styled.h4`
 
 function Profile() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
-    const {userID} = useContext(UserContext);
 
-    const {data, loading, error} = useDB("user/" + userID);
+    const {data, loading, error} = useDB("user/" + 8);
     const [bookings, setBookings] = useState();
     //get user info from backend
 
@@ -61,14 +60,11 @@ function Profile() {
         setBookings(data.bookings);
     }, [data])
 
-    console.log(bookings)
-
     return (
     <ProfileDiv>
     <UserInfo>
         <Image src='/profile.svg' alt={''} width={50} height={50}></Image>
         <div>
-            {userID}
             <Heading3>David Marius Feliksen</Heading3>
             <Heading4>Role: TA</Heading4>
             <Heading4>Bookings: 2</Heading4>

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
 import { Cookie } from 'next/font/google';
-import UserContext from '../contexts/UserContext';
 import { useRouter } from 'next/router';
 
 /* This will need to be moved into a seperate style file, but is here for now */
@@ -43,7 +42,6 @@ const LoginInput = styled.input`
 
 
 const Login: NextPageWithLayout = () => {
-  const {setUserID, userID} = useContext(UserContext);
   const router = useRouter();
   let user;
   const handleLogin = async (event: FormEvent) => {
@@ -62,9 +60,6 @@ const Login: NextPageWithLayout = () => {
     if (response.status !== 401) {
       const result = await response.json();
       user = result.user;
-      setUserID(user.id);
-      console.log(userID)
-      console.log(user.id)
       document.cookie = `token=${result.token}`;
       router.push('/');
     }
@@ -74,7 +69,6 @@ const Login: NextPageWithLayout = () => {
   return (
     <LoginContainer>
       <LogoTitle>BookIT</LogoTitle>
-      {userID}
       <LoginForm onSubmit={handleLogin}>
         <LoginInput type="email" placeholder="Email" name='email' autoComplete='current-email' />
         <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />

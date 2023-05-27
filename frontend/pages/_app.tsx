@@ -5,7 +5,6 @@ import rootLayout from '../components/layout';
 import '../src/app/globals.css'
 import { Lexend } from 'next/font/google'
 import Head from 'next/head';
-import { UserProvider } from '../contexts/UserContext';
 
 const lexend = Lexend({ weight: ["300", "400", "500", "600", "700", "800", "900"], subsets: ['latin'] })
 
@@ -23,7 +22,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
  
   return (
     <>
-    <UserProvider>
       <Head>
         <title>BookIT</title>
         <link rel="icon" href="/favicon.ico" />
@@ -32,7 +30,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <main className={lexend.className}>
         {getLayout(<Component {...pageProps} />)}
       </main>
-    </UserProvider>
     </>
   );
 }
