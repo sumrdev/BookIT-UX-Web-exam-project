@@ -54,7 +54,7 @@ export const signupHandler = async (req: Request, res: Response) => {
         { email, name: user.name, id: user.id, role: user.role, isAdmin: user.admin  },
         process.env.JWT_SECRET as string,
         {
-          expiresIn: "1h",
+          expiresIn: "10h",
         }
       );
       return res.json({token: token, user: user});
@@ -76,13 +76,12 @@ export const createUser = async (req: Request, res: Response) => {
     */
     try {
       const { body } = req;
-      const { email, name, password, isAdmin } = body;
+      const { email, name, password } = body;
       const user = await prisma.user.create({
         data: {
           email: email,
           name: name,
           password: await argon2.hash(password),
-          admin: isAdmin,
         },
       });
       return res.json(user);
@@ -118,6 +117,7 @@ export const deleteUser = async (req: Request, res: Response) => {
             "bearerAuth": []
     }] */
     try {
+      if (req.auth.isAdmin===false) return res.status(401).json({ message: "Unauthorized" });
       const users = await prisma.user.findMany();
       return res.json(users);
     } catch (error) {
@@ -133,6 +133,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     try {
       //include bookings
       const { id } = req.params;
+      if (req.auth.id !== parseInt(id) && req.auth.isAdmin===false) return res.status(401).json({ message: "Unauthorized" });
       const user = await prisma.user.findFirst({
         where: {
           id: parseInt(id), 
@@ -167,6 +168,8 @@ export const deleteUser = async (req: Request, res: Response) => {
     try {
       const { body } = req;
       const { id } = req.params;
+      if (req.auth.id !== parseInt(id) && !req.auth.isAdmin == true) return res.status(401).json({ message: "Unauthorized" });
+
       let { email, name, password } = body;
       let dontHash;
   
