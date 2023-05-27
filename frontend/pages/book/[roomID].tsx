@@ -6,12 +6,17 @@ import { FloatButton } from '../../components/styled/buttons';
 import { RoomImageContainer, RoomImage, RoomImageText } from "../../components/styled/imageContainers"
 import { Table, TableRow, TableCategory, TableDataText } from "../../components/styled/tables"
 import { parse } from 'path';
+import { styled } from 'styled-components';
 
 type Booking = {
     startTime: string,
     endTime: string,
     roomId: number,
 }
+
+const Spacer = styled.div`
+    height: 70px;
+`
 
 function roomID({}) {
     const {  setShowBackbutton, setProfile, setHeading } = useContext(NavContext);
@@ -130,6 +135,7 @@ function roomID({}) {
                 </tbody>
             </Table>
         )}
+        <Spacer/>
         <FloatButton onClick={() => bookNow()}>Book now</FloatButton>
     </>
   )

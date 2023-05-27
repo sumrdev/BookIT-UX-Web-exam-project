@@ -78,7 +78,11 @@ export const createRoom = async (req: Request, res: Response) => {
             "bearerAuth": []
     }] */
     try {
-      const rooms = await prisma.room.findMany();
+      const rooms = await prisma.room.findMany({
+        include: {
+            bookings: true,
+        },
+      });
       return res.json(rooms);
     } catch (error) {
       console.log(error);

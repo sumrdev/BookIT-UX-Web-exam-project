@@ -60,6 +60,7 @@ function Home() {
     useEffect(() => {
         if (data) {
             setRooms(data)
+            console.log(data)
         }
     }, [data])
 
@@ -87,26 +88,7 @@ function Home() {
         {
             <RoomsBox>
                 {rooms.map((room: any) => (
-                    <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={[
-                        {
-                            startTime: "2023-05-26T16:52:00.000Z",
-                            endTime:   "2023-05-26T21:52:00.000Z",
-                            "roomId": 1,
-                            "userId": 2
-                        },
-                        {
-                            startTime: "2023-05-26T22:52:00.000Z",
-                            endTime:   "2023-05-26T24:52:00.000Z",
-                            "roomId": 1,
-                            "userId": 2
-                        },
-                        {
-                            startTime: "2023-05-26T06:52:00.000Z",
-                            endTime:   "2023-05-26T10:52:00.000Z",
-                            "roomId": 1,
-                            "userId": 2
-                        },
-                    ]} />
+                    <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={room.bookings} />
                 ))}
             </RoomsBox>
         }

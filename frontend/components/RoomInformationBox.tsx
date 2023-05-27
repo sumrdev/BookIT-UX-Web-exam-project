@@ -64,8 +64,8 @@ const Info = styled.div`
     color: var(--gray-font);
 `;    
 function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number, id: number) {
-    let startPercentage = (startTime.getHours() + startTime.getMinutes() / 60) / 24
-    let endPercentage = (endTime.getHours() + endTime.getMinutes() / 60) / 24
+    let startPercentage = ((startTime.getHours()-8) + startTime.getMinutes() / 60) / 15
+    let endPercentage = ((endTime.getHours()-8) + endTime.getMinutes() / 60) / 15
     //clamp values
     if (startPercentage < 0) startPercentage = 0
     if (startPercentage > 1) startPercentage = 1
@@ -86,6 +86,7 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
         if (!timelineRef.current) return
         let timeSlots: Array<any> = []
         let timeLineWidth = timelineRef.current.offsetWidth;
+        if (!bookings) bookings = []
         bookings.forEach((booking: any, index: number) => {
             timeSlots.push(CreateTimeSlot(new Date(booking.startTime), new Date(booking.endTime), timeLineWidth, index))
         })
