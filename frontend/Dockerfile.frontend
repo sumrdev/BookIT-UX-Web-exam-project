@@ -1,0 +1,13 @@
+# Dockerfile.frontend
+
+# Start from a base image
+FROM node:18
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+COPY . ./
+
+CMD ["npm", "run", "dev"]
