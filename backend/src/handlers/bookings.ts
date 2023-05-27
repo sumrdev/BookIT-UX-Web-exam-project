@@ -15,8 +15,7 @@ export const createBooking = async (req: Request, res: Response) => {
     try {
       const { body } = req;
       const { roomId, startTime, endTime } = body;
-  
-      if(req.auth.id && req.auth.isAdmin===false){{
+      if(!req.auth.id && req.auth.isAdmin===false){{
         return res.status(401).json({ message: "Unauthorized" }
       )}}; 
 

@@ -73,7 +73,7 @@ function roomID({}) {
                 </tbody>
             </Table>
         )}
-        <FloatButton onClick={() => router.push(`/book/${roomID}`)}>Book this room</FloatButton>
+        <FloatButton onClick={() => router.push(`/book/${roomID}`)}>Select time</FloatButton>
     </>
   )
 }
