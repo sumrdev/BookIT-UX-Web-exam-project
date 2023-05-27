@@ -62,7 +62,7 @@ function roomID({}) {
         }
     }, [data])
 
-    function bookNow() {
+    async function bookNow() {
         let finalBookings: Booking[] = [];
         selectedTimes.forEach((time) => {
             finalBookings.push({
@@ -73,16 +73,15 @@ function roomID({}) {
         });
         finalBookings = meargeBookings(finalBookings);
         const token = document.cookie.split("=")[1];
-        finalBookings.forEach((booking) => {
-            fetch("http://localhost:4000/booking", {
+        await fetch("http://localhost:4000/booking", {
                 method: "POST",
-                body: JSON.stringify(booking),
+                body: JSON.stringify(finalBookings),
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': "Bearer " + token,
                 },
             });
-        });
+    
         router.push("/");
     }
 
