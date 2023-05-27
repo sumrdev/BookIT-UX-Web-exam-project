@@ -3,7 +3,10 @@ import { useDB } from '../../hooks/useDB';
 import { useContext, useEffect } from 'react';
 import NavContext from '../../contexts/NavContext';
 import { BoxHeaderSmall } from "../../components/styled/headers"
-import { LargeButton } from '../../components/styled/buttons';
+import { FloatButton } from '../../components/styled/buttons';
+import { styled } from 'styled-components';
+
+
 function roomID({}) {
     const {  setShowBackbutton, setProfile, setHeading } = useContext(NavContext);
     useEffect(() => {
@@ -43,7 +46,7 @@ function roomID({}) {
                 ))}
             </div>
         )}
-        <LargeButton onClick={() => router.push(`/room/${roomID}/book`)}>Book this room</LargeButton>
+        <FloatButton onClick={() => router.push(`/book/${roomID}`)}>Book this room</FloatButton>
     </>
   )
 }

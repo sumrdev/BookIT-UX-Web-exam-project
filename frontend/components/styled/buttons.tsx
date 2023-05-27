@@ -13,9 +13,9 @@ const SmallButton = styled.button`
 `;
 
 const LargeButton = styled.button`
-  padding: 1rem;
-  font-size: 1.2rem;
-  border-radius: 5px;
+  padding: 1.2rem 2rem;
+  font-size: 1.3rem;
+  border-radius: 10px;
   border: none;
   color: #ffffff; /* Text color */
   background-color: #e06464; /* Button color */
@@ -26,4 +26,13 @@ const LargeButton = styled.button`
   }
 `;
 
-export { SmallButton, LargeButton }
+
+const FloatButton = styled(LargeButton)`
+    width: 80%;
+    position: fixed;
+    bottom: 20px;
+    left: 10%;
+    z-index: 100;
+`
+
+export { SmallButton, LargeButton, FloatButton }
