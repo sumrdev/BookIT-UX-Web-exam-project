@@ -1,8 +1,6 @@
 import { Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { expressjwt, Request } from "express-jwt";
-var jwt = require("jsonwebtoken");
-import argon2 from "argon2";
+import { Request } from "express-jwt";
 const prisma = new PrismaClient();
 
 export const createRoom = async (req: Request, res: Response) => {

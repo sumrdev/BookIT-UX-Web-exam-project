@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { expressjwt, Request } from "express-jwt";
+import { Request } from "express-jwt";
 
 export const rootHandler = (_req: Request, res: Response) => {
     /* #swagger.security = [{

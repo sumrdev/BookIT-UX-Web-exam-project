@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { expressjwt, Request } from "express-jwt";
+import { Request } from "express-jwt";
 var jwt = require("jsonwebtoken");
 import argon2 from "argon2";
 const prisma = new PrismaClient();
@@ -20,7 +20,7 @@ export const signupHandler = async (req: Request, res: Response) => {
           password: await argon2.hash(password),
         },
       });
-      const token = jwt.sign({ email, name, id:user.id, role: user.admin }, process.env.JWT_SECRET as string, {
+      const token = jwt.sign({ email, name, id:user.id, role: user.role, isAdmin: user.admin }, process.env.JWT_SECRET as string, {
         expiresIn: "1h",
       });
       return res.json({token: token, user: user});
@@ -51,7 +51,7 @@ export const signupHandler = async (req: Request, res: Response) => {
         return res.status(401).json({ message: "Invalid credentials" });
       }
       const token = jwt.sign(
-        { email, name: user.name, id: user.id, role: user.admin },
+        { email, name: user.name, id: user.id, role: user.role, isAdmin: user.admin  },
         process.env.JWT_SECRET as string,
         {
           expiresIn: "1h",
@@ -100,6 +100,7 @@ export const deleteUser = async (req: Request, res: Response) => {
     }] */
     try {
       const { id } = req.params;
+      if (req.auth.id !== parseInt(id) && !req.auth.isAdmin == true) return res.status(401).json({ message: "Unauthorized" });
       const user = await prisma.user.delete({
         where: {
           id: parseInt(id),
