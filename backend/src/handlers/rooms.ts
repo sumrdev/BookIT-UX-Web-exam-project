@@ -59,6 +59,9 @@ export const createRoom = async (req: Request, res: Response) => {
         where: {
           id: parseInt(id),
         },
+        include: {
+            bookings: true,
+        },
       });
       if (!room) {
         return res.status(404).json({ message: "Room not found" });
