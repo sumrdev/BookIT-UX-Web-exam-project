@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import { useDB } from '../../hooks/useDB';
 import { useContext, useEffect } from 'react';
 import NavContext from '../../contexts/NavContext';
-
+import { BoxHeaderSmall } from "../../components/styled/headers"
+import { LargeButton } from '../../components/styled/buttons';
 function roomID({}) {
     const {  setShowBackbutton, setProfile, setHeading } = useContext(NavContext);
     useEffect(() => {
@@ -31,17 +32,18 @@ function roomID({}) {
         {data && (
             <div>
                 {roomInformaitonKeys.map((key, index) => (
-                    <div>
+                    <BoxHeaderSmall key={index}>
                         <h3>{key}</h3>
                         <p>{ 
                             (typeof data[key]) == "boolean"  ? 
                                 data[key] == true ? "Yes" : "No" :  
                                 data[key]
                             }</p>
-                    </div>
+                    </BoxHeaderSmall>
                 ))}
             </div>
         )}
+        <LargeButton onClick={() => router.push(`/room/${roomID}/book`)}>Book this room</LargeButton>
     </>
   )
 }

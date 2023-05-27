@@ -3,7 +3,7 @@ import { styled } from "styled-components"
 import { useDB } from "../hooks/useDB"
 import RoomInformationBox from "../components/RoomInformationBox"
 import NavContext from "../contexts/NavContext"
-import Link from "next/link"
+import { BoxHeaderSmall } from "../components/styled/headers"
 const FilterBox = styled.div`
     display: flex;
     gap: 10px;
@@ -22,12 +22,6 @@ const Filter = styled.div`
     }
 `
 
-const BoxHeaderSmall = styled.div`
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-`
-
 const RoomsBox = styled.div`
     display: flex;
     flex-direction: column;
@@ -36,7 +30,6 @@ const RoomsBox = styled.div`
     gap: 10px;
     margin-bottom: 30px;
 `
-
 
 
 function Home() {

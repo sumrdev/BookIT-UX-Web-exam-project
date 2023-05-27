@@ -2,7 +2,7 @@ import React, { FormEvent } from 'react';
 import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import type { NextPageWithLayout } from './_app';
-import { Cookie } from 'next/font/google';
+import { SmallButton } from '../components/styled/buttons';
 /* This will need to be moved into a seperate style file, but is here for now */
 const LoginContainer = styled.div`
   display: flex;
@@ -37,18 +37,7 @@ const LoginInput = styled.input`
   border: 1px solid #ced4da;
 `;
 
-const LoginButton = styled.button`
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: none;
-  color: #ffffff; /* Text color */
-  background-color: #e06464; /* Button color */
-  cursor: pointer;
 
-  &:hover {
-    background-color: #b55454; /* Darker shade for hover */
-  }
-`;
  
 
 
@@ -82,7 +71,7 @@ const Login: NextPageWithLayout = () => {
       <LoginForm onSubmit={handleLogin}>
         <LoginInput type="email" placeholder="Email" name='email' autoComplete='current-email' />
         <LoginInput type="password" placeholder="Password" name='password' autoComplete='current-password' />
-        <LoginButton >Login</LoginButton>
+        <SmallButton>Login</SmallButton>
       </LoginForm>
     </LoginContainer>
   );
