@@ -39,7 +39,6 @@ const doc = {
       startTime: Date.now(),
       endTime: Date.now()+3600000,
       roomId: 1,
-      userId: 2,
     },
     UpdateUser: {
       email: 'john@doe.com',

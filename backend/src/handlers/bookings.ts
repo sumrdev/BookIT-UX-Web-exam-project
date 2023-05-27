@@ -14,9 +14,9 @@ export const createBooking = async (req: Request, res: Response) => {
     */
     try {
       const { body } = req;
-      const { roomId, userId, startTime, endTime } = body;
+      const { roomId, startTime, endTime } = body;
   
-      if(req.auth.id!==userId && req.auth.isAdmin===false){{
+      if(req.auth.id && req.auth.isAdmin===false){{
         return res.status(401).json({ message: "Unauthorized" }
       )}}; 
 
@@ -32,7 +32,7 @@ export const createBooking = async (req: Request, res: Response) => {
                 endTime: new Date(endTime),
                 user: {
                   connect: {
-                    id: userId,
+                    id: req.auth.id,
                   },
                 },
               },
@@ -61,11 +61,7 @@ export const updateBooking = async (req: Request, res: Response) => {
       const { id } = req.params;
       let allowedKeys = ["startTime", "endTime", "roomId", "userId"];
 
-      if(req.auth.id!==id && req.auth.isAdmin===false){{
-        return res.status(401).json({ message: "Unauthorized" }
-      )}};
-  
-      const updatedRoom = await prisma.booking.update({
+      const updatedBooking = await prisma.booking.update({
         where: {
           id: parseInt(id),
         },
@@ -78,7 +74,10 @@ export const updateBooking = async (req: Request, res: Response) => {
           endTime: new Date(body.endTime),
         },
       });
-      return res.json(updatedRoom);
+      if(req.auth.id!==updatedBooking.userId && req.auth.isAdmin===false){{
+        return res.status(401).json({ message: "Unauthorized" }
+      )}};
+      return res.json(updatedBooking);
     } catch (error) {
       console.log(error);
       return res.status(500).json({ message: "Something went wrong" });
