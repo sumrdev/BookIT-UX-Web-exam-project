@@ -13,6 +13,9 @@ export const createRoom = async (req: Request, res: Response) => {
         }]
     */
     try {
+      if(req.auth.isAdmin===false){
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const { body } = req;
       const {
         name,
@@ -91,6 +94,9 @@ export const createRoom = async (req: Request, res: Response) => {
         }]
     */
     try {
+      if(req.auth.isAdmin===false){
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const { body } = req;
       const { id } = req.params;
       let allowedKeys = [
@@ -127,6 +133,9 @@ export const deleteRoom = async (req: Request, res: Response) => {
             "bearerAuth": []
     }] */
     try {
+      if(req.auth.isAdmin===false){
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const { id } = req.params;
       const room = await prisma.room.delete({
         where: {

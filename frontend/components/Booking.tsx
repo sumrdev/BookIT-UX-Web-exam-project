@@ -21,8 +21,17 @@ const Times = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    self-align: center;
+    min-width: 50px;
 `;
+
+const Information = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 50px;
+`;
+
 
 const P = styled.p`
     margin: 0;
@@ -45,20 +54,20 @@ function Booking ({type, name, start, end, id}: {type: string, name: string, sta
 
     return (
         <BookingBox href="">
-            <div>
+            <Information>
                 {type}
                 <br />
                 {name}
-            </div>
+            </Information>
             <Times>
                 {startTime}
                 <br />
                 <P>|</P>
                 {endTime}
             </Times>
-            <div>
+            <Information>
                 {upcoming}
-            </div>
+            </Information>
         </BookingBox>
     )
 }
