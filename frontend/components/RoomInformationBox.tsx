@@ -35,14 +35,18 @@ const Timeline = styled.div`
     position: relative;
 `;
 
-const TimeSlot = styled.div<{left: string, width: string}>`
+
+const TimeSlot = styled.div.attrs<{left:number, width:number}>((props) => ({
+    style: {
+        left: props.left + "px",
+        width: props.width + "px"
+        }
+    }))`
     position: absolute;
     height: 8px;
     width: 10px;
     left: 10px;
     background-color: var(--splash);
-    left: ${props => props.left}px;
-    width: ${props => props.width}px;
 `;
 
 const Name = styled.h2`
@@ -78,7 +82,7 @@ function CreateTimeSlot(startTime: Date, endTime: Date, timeLineWidth: number, i
 function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
     const [ timeSlots, setTimeSlots ] = useState<Array<any>>([])
     const timelineRef = useRef<HTMLHeadingElement>(null);
-    useEffect(() => {
+    function updateTimeline() {
         if (!timelineRef.current) return
         let timeSlots: Array<any> = []
         let timeLineWidth = timelineRef.current.offsetWidth;
@@ -86,7 +90,15 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
             timeSlots.push(CreateTimeSlot(new Date(booking.startTime), new Date(booking.endTime), timeLineWidth, index))
         })
         setTimeSlots(timeSlots)
-    }, [bookings, timelineRef.current])
+    }
+
+    useEffect(() => {
+        window.addEventListener("resize", updateTimeline);
+        updateTimeline()
+        return () => {
+            window.removeEventListener("resize", updateTimeline);
+        }
+    }, [])
 
   return (
         <MainBox href={`/room/${id}`}>
