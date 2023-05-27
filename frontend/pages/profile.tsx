@@ -42,13 +42,22 @@ const Heading4 = styled.h4`
     margin: 5px;
 `;
 
+type user = {
+    name: string,
+    role: string,
+    bookings: any[],
+}
 
 function Profile() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
 
     const {data, loading, error} = useDB("getMyUser");
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<user>({
+        name: "",
+        role: "",
+        bookings: [],
+    });
     const [bookedLength, setBookedLength] = useState(0);
 
 
