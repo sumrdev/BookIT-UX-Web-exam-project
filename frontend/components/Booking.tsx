@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
 
@@ -12,8 +11,11 @@ const ContainsCancel = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 400px;
+    @media (min-width: 768px) {
+        max-width: 400px;
+    }
     `;
+    
 
 const BookingBox = styled.a`
     display: flex;
@@ -53,9 +55,6 @@ const Cancel = styled.button`
     border-radius: 5px;
     cursor: pointer;
 `;
-
-
-
 
 function Booking ({type, name, start, end, id, refetch}: {type: string, name: string, start: number, end: number, id: number, refetch: any}){
     const [upcoming, setUpcoming] = useState(type);
