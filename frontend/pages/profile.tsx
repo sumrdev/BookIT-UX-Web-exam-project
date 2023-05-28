@@ -30,8 +30,13 @@ const BookedRooms = styled.div`
     align-items: center;
     justify-content: center;
     background-color: var(--background);
-    margin-top: 15px;
+    margin-bottom: 15px;
     width: 100%;
+    gap: 20px;
+    @media (min-width: 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 `;
 
 const Heading3 = styled.h3`
@@ -83,8 +88,8 @@ function Profile() {
         }
     </UserInfo>
 
-    <BookedRooms>
         <Heading3>Your booked rooms</Heading3>
+        <BookedRooms>
             {user  && user.bookings && user.bookings.map((booking) => ( 
                 <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} refetch={fetchData} ></Booking>
             ))}

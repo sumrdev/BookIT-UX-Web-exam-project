@@ -5,7 +5,6 @@ import { styled } from "styled-components";
 const ContainsCancel = styled.div`
     width: 100%;
     background-color: #ffffff; 
-    margin-top: 15px;
     padding: 15px;
     color: black;
     border-radius: 10px;
@@ -13,7 +12,7 @@ const ContainsCancel = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    max-width: 400px;
     `;
 
 const BookingBox = styled.a`

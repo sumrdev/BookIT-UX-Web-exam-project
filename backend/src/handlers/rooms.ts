@@ -14,7 +14,7 @@ export const createRoom = async (req: Request, res: Response) => {
     */
     try {
       if(req.auth.isAdmin===false){
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Admin access needed for this action" });
       }
       const { body } = req;
       const {
@@ -102,7 +102,7 @@ export const createRoom = async (req: Request, res: Response) => {
     */
     try {
       if(req.auth.isAdmin===false){
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Admin access needed for this action" });
       }
       const { body } = req;
       const { id } = req.params;
@@ -141,7 +141,7 @@ export const deleteRoom = async (req: Request, res: Response) => {
     }] */
     try {
       if(req.auth.isAdmin===false){
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Admin access needed for this action" });
       }
       const { id } = req.params;
       const room = await prisma.room.delete({

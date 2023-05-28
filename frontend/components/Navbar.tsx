@@ -17,6 +17,9 @@ const Navigation = styled.div`
   font-family: 'Lexend', sans-serif;
   `;
 
+const BackButton = styled.div`
+    cursor: pointer;
+`;
 
 function Navbar() {
   const { showBackbutton, heading, profile } = useContext(NavContext);
@@ -24,7 +27,7 @@ function Navbar() {
   let goback;
   let profileSVG;
   // go back goes to previous page
-  showBackbutton ? goback = <a onClick={() => Router.back()}><Image src='/back.svg' alt={''} width={25} height={25}></Image></a>: goback = <></>
+  showBackbutton ? goback = <BackButton onClick={() => Router.back()}><Image src='/back.svg' alt={''} width={25} height={25}></Image></BackButton>: goback = <></>
   
   if(profile == "profile") {
     profileSVG = <Link href="/profile"><Image src='/profile.svg' alt={''} width={50} height={50}></Image></Link> 

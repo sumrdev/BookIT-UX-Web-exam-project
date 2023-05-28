@@ -6,6 +6,7 @@ const Table = styled.table`
     margin-bottom: 1rem;
     background-color: var(--background-light);
     border-radius: 10px;
+    max-width: 400px;
 
 `
 

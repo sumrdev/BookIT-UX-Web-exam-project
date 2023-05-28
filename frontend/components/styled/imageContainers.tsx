@@ -6,6 +6,7 @@ const RoomImageContainer = styled.div`
     height: 120px;
     margin-bottom: 1rem;
     position: relative;
+    max-width: 400px;
 `
 
 const RoomImage = styled(Image).attrs<{type:string, width:number}>((props) => ({

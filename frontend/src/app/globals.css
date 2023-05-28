@@ -12,8 +12,22 @@ html, body {
 
 }
 
-main {
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 1rem;
+}
+
+main {
+  margin: 0 auto; 
+  max-width: 1250px;
+}
+
+@media (min-width: 768px) {
+  body {
+    margin: 2rem;
+  }
 }
 
 * {

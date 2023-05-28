@@ -3,7 +3,7 @@ import { styled } from "styled-components"
 import { useDB } from "../hooks/useDB"
 import RoomInformationBox from "../components/RoomInformationBox"
 import NavContext from "../contexts/NavContext"
-import { BoxHeaderSmall } from "../components/styled/headers"
+import { BoxHeaderSmall } from "../components/styled/text"
 
 const FilterBox = styled.div`
     display: flex;
@@ -13,6 +13,10 @@ const FilterBox = styled.div`
     color: black;
     margin-bottom: 30px;
     background-color: var(--background);
+    flex-wrap: wrap;
+    @media (min-width: 768px) {
+        justify-content: left;
+    }
 `        
 
 const Filter = styled.div`
@@ -22,6 +26,9 @@ const Filter = styled.div`
     border-radius: 5px;
     border: 1px solid #ced4da;
     border: none;
+    cursor: pointer;
+    user-select: none;
+
     &.active {
         background-color: var(--light-accent);
     }
@@ -34,6 +41,12 @@ const RoomsBox = styled.div`
     align-items: center;
     gap: 10px;
     margin-bottom: 30px;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
 `
 
 

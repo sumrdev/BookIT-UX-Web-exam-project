@@ -1,17 +1,16 @@
 import NavContext from "../contexts/NavContext"
 import React, { useState, useContext, useEffect, FormEvent } from 'react';
 import styled from 'styled-components';
-import type { NextPageWithLayout } from './_app';
 import { SmallButton } from '../components/styled/buttons';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDB } from "../hooks/useDB";
+import { useRouter } from "next/router";
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
   height: 100vh;
   background-color: var(--background);
 `;
@@ -42,7 +41,8 @@ const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 2rem;
+  padding: 1rem 0;
+  max-width: 400px;
   border-radius: 10px;
   background-color: var(--background);
 `;
@@ -107,9 +107,22 @@ const PopupContent = styled.div`
   width: 80%;
 `;
 
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  role: string; 
+}
+
 function settings() {
     const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
-    
+    const {data, loading, error} = useDB("getMyUser");
+    const router = useRouter();
+    const [user, setUser] = useState<User>({ id: 0, name: "", email: "", role: ""});
+    useEffect(() => {
+        setUser(data);
+    }, [data])
+
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const openPopup = () => {
         setIsPopupOpen(true);
@@ -163,7 +176,7 @@ function settings() {
         return;
       } else {
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        window.location = '/';
+        router.push('/');
       }
     }
 
@@ -171,14 +184,10 @@ function settings() {
       event.preventDefault();
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       toast.success("Logging out...");
-      window.location = '/';
+      router.push('/');
     }
 
-    const {data, loading, error} = useDB("getMyUser");
-    const [user, setUser] = useState({});
-    useEffect(() => {
-        setUser(data);
-    }, [data])
+
 
   return (
     <LoginContainer>

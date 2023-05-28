@@ -20,6 +20,7 @@ const MainBox = styled(Link)`
     width: 100%;
     text-decoration: none;
     color: black;
+    max-width: 400px;
 `;
 const TimelineContainer = styled.div`
     width: 100%;
@@ -35,6 +36,19 @@ const Timeline = styled.div`
     position: relative;
 `;
 
+const TimeCursor = styled.div.attrs<{left:number}>((props) => ({
+    style: {
+        left: props.left + "px"
+        }
+    }))`
+    position: absolute;
+    height: 16px;
+    width: 3px;
+    background-color: #444;
+    border-radius: 5px;
+    top: -4px;
+    left: 10px;
+`;
 
 const TimeSlot = styled.div.attrs<{left:number, width:number}>((props) => ({
     style: {
@@ -93,6 +107,16 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
         setTimeSlots(timeSlots)
     }
 
+    function currentTime() {
+        let now = new Date()
+        if (!timelineRef.current) return
+        let timeLineWidth = timelineRef.current.offsetWidth;
+        let startPercentage = ((now.getHours()-8) + now.getMinutes() / 60) / 15
+        if (startPercentage < 0) startPercentage = 0
+        if (startPercentage > 1) startPercentage = 1
+        return startPercentage * timeLineWidth
+    }
+
     useEffect(() => {
         window.addEventListener("resize", updateTimeline);
         updateTimeline()
@@ -109,7 +133,8 @@ function RoomInformationBox({ name, type, capacity, bookings, id }: props) {
             <TimelineContainer> 
                 <Timeline ref={timelineRef}>
                     {timeSlots}
-                </Timeline>
+                    <TimeCursor left={currentTime()}></TimeCursor>
+                </Timeline >
             </TimelineContainer>
         </MainBox>
   )
