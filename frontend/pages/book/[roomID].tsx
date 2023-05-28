@@ -40,7 +40,8 @@ function roomID({}) {
 
     const [Bookings, setBookings] = useState<Booking[]>([]);
     function toggleTime(time: Date) {
-        if (selectedTimes.map(date => date.toISOString()).includes(time.toISOString())) {
+        if(dateIsUnavailable(time)) return;
+        if (selectedTimes.map(date => date.toISOString()).includes(time.toISOString()) ){
             setSelectedTimes(selectedTimes.filter((t) => t.toISOString() != time.toISOString()));
         } else {
             setSelectedTimes([...selectedTimes, time]);
