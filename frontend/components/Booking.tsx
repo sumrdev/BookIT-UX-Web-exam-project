@@ -58,17 +58,15 @@ const Cancel = styled.button`
 `;
 
 function Booking ({type, name, start, end, id, refetch}: {type: string, name: string, start: number, end: number, id: number, refetch: any}){
-
     const options = {
         "hour12": false,
     }
-
 
     const [upcoming, setUpcoming] = useState(type);
     const [startTime, setStartTime] = useState(new Date(start).toLocaleTimeString('en-US', options).replace(/:[^:]*$/, ''));
     const [endTime, setEndTime] = useState(new Date(end).toLocaleTimeString('en-US', options).replace(/:[^:]*$/, ''));
     useEffect(() => {
-        end > Date.now() ? setUpcoming("Upcoming") : setUpcoming("Past");
+        new Date(end).getTime() > Date.now() ? setUpcoming("Upcoming") : setUpcoming("Past");
         setEndTime(new Date(end).toLocaleTimeString('en-US', options).replace(/:[^:]*$/, ''));
     }, [])
 
