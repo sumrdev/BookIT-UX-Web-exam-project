@@ -73,7 +73,6 @@ function Home() {
     useEffect(() => {
         if (data) {
             setRooms(data)
-            console.log(data)
         }
     }, [data])
 
