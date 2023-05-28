@@ -52,9 +52,14 @@ function roomID({}) {
     function dateIsUnavailable(date: Date) {
         let isUnavailable = false;
         Bookings.forEach((booking) => {
+            const currentDate = new Date(Date.now());
             const startTime = new Date(booking.startTime);
             const endTime = new Date(booking.endTime);
             if (date >= startTime && date < endTime) {
+                isUnavailable = true;
+                return true;
+            }
+            if(new Date(date) < currentDate) {
                 isUnavailable = true;
                 return true;
             }
