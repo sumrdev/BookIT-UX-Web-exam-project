@@ -184,8 +184,8 @@ export const deleteUser = async (req: Request, res: Response) => {
       const { body } = req;
       const { id } = req.params;
       if (req.auth.id !== parseInt(id) && req.auth.isAdmin == false) return res.status(401).json({ message: "Unauthorized" });
-
-      let { email, name, password } = body;
+      let { email, name, role, password } = body;
+      if(req.auth.isAdmin===false) role = undefined; //only admins can change role 
       let dontHash;
   
       const user = await prisma.user.findFirst({
@@ -196,6 +196,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   
       if (!email) email = user?.email;
       if (!name) name = user?.name;
+      if (!role) role = user?.role;
       if (!password) {
         password = user?.password;
         dontHash = true;
@@ -208,6 +209,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         data: {
           email: email,
           name: name,
+          role: role,
           password: dontHash ? password : await argon2.hash(password),
         },
       });
