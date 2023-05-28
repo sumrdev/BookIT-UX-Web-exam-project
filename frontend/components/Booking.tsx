@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { styled } from "styled-components";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ContainsCancel = styled.div`
     width: 100%;
@@ -72,18 +73,29 @@ function Booking ({type, name, start, end, id, refetch}: {type: string, name: st
     }
     const token = document.cookie.split("=")[1];
 
-    async function cancelBooking(){
-        await fetch(`http://localhost:4000/booking/${id}`,{
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization': "Bearer " + token, // notice the Bearer before your token
-            },
-        })
-        refetch();
-    }
+    async function cancelBooking() {
+        try {
+            const response = await fetch(`http://localhost:4000/booking/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + token, // notice the Bearer before your token
+                },
+            });
 
-    //replaces the seconds and milliseconds with nothing
+            if (!response.ok) {
+                throw new Error("Booking cancellation failed");
+            }
+
+            toast.success("Your booking was cancelled!");
+            await new Promise(resolve => setTimeout(resolve, 500)); // sleep for 500ms
+
+            refetch();
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to cancel booking or refetch data");
+        }
+    }
 
     return (
         <ContainsCancel>
@@ -104,6 +116,7 @@ function Booking ({type, name, start, end, id, refetch}: {type: string, name: st
             </Information>
         </BookingBox>
         {showCancelButton && <Cancel onClick={cancelBooking}>Cancel booking</Cancel>}
+        <Toaster />
         </ContainsCancel>
 
     )

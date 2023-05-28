@@ -7,6 +7,7 @@ import { RoomImageContainer, RoomImage, RoomImageText } from "../../components/s
 import { Table, TableRow, TableCategory, TableDataText } from "../../components/styled/tables"
 import { parse } from 'path';
 import { styled } from 'styled-components';
+import toast, { Toaster } from 'react-hot-toast';
 
 type Booking = {
     startTime: string,
@@ -60,6 +61,10 @@ function roomID({}) {
         });
         return isUnavailable;
     }
+    
+    function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     useEffect(() => {
         if (data && data.bookings) {
@@ -99,6 +104,8 @@ function roomID({}) {
                 },
             });
         }
+        toast.success("Successfully booked room!");
+        await sleep(750);
         router.push("/");
     }
 
@@ -148,7 +155,7 @@ function roomID({}) {
             </Table>
         )}
         <Spacer/>
-        <FloatButton onClick={() => bookNow()}>Book now</FloatButton>
+        <FloatButton onClick={() => bookNow()}>Book now<Toaster /></FloatButton>
     </>
   )
 }

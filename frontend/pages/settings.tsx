@@ -26,11 +26,9 @@ const BottomSection = styled.div`
   box-sizing: border-box;
 `;
 
-const LogoTitleTest = styled.h1`
+const LogoTitleTest = styled.h3`
   color: #000000;
-  font-size: 1.2rem; 
   text-align: left;
-  font-family: 'Lexend', sans-serif;
   margin-bottom: 0rem;
   margin-top: -1rem;
   padding: 2rem;
@@ -49,6 +47,7 @@ const LoginForm = styled.form`
 
 const LoginInput = styled.input`
   margin-bottom: 1rem;
+  font-size: 18px;
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ced4da;
@@ -58,13 +57,13 @@ const LoginInput = styled.input`
 const LoginHint = styled.p`
   margin-top: 0px;
   text-align: center;
-  font-size: 13px;
 `;
 
-const FieldLabel = styled.label`
-  font-size: 0.8rem;
+const FieldLabel = styled.h4`
   text-align: left;
   color: #000;
+  margin-top: 0px;
+  margin-bottom: 0px;
 `;
 
 const SaveButton = styled.button`
@@ -73,6 +72,7 @@ const SaveButton = styled.button`
   width: 10rem;
   border: none;
   color: #ffffff;
+  font-size: 18px;
   align-self: center;
   background-color: var(--splash);
   cursor: pointer;
@@ -80,6 +80,7 @@ const SaveButton = styled.button`
 
 const DeleteAccountButton = styled.button`
   border: none;
+  font-size: 18px;
   background: transparent;
   color: var(--splash);
   cursor: pointer;
@@ -87,6 +88,7 @@ const DeleteAccountButton = styled.button`
 `;
 
 const PopupOverlay = styled.div`
+  font-size: 18px;
   position: fixed;
   top: 0;
   left: 0;
@@ -161,6 +163,10 @@ function settings() {
           toast('You need to change at least one value!')
         }
     }
+
+    function sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
     
     const deleteAccount = async (event: FormEvent) => {
       event.preventDefault();
@@ -171,11 +177,12 @@ function settings() {
       });
 
       if (response.status !== 200) {
-
         toast.error("Something went wrong!")
         return;
       } else {
+        toast.success("Your account is being deleted...");
         document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        await sleep(2000);
         router.push('/');
       }
     }
@@ -184,6 +191,7 @@ function settings() {
       event.preventDefault();
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       toast.success("Logging out...");
+      await sleep(2000);
       router.push('/');
     }
 

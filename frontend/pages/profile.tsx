@@ -89,21 +89,9 @@ function Profile() {
 
         <Heading3>Your booked rooms</Heading3>
         <BookedRooms>
-        {user && user.bookings && user.bookings.length > 0 ? (
-            user.bookings.map((booking) => (
-              <Booking
-                key={booking.id}
-                type={booking.room.type}
-                name={booking.room.name}
-                start={booking.startTime}
-                end={booking.endTime}
-                id={booking.id}
-                refetch={fetchData}
-              />
-            ))
-          ) : (
-            <h4>No booked rooms</h4>
-          )}
+            {user && user.bookings && user.bookings.map((booking) => ( 
+                <Booking key={booking.id} type={booking.room.type} name={booking.room.name} start={booking.startTime} end={booking.endTime} id={booking.id} refetch={fetchData} ></Booking>
+            ))}
         </BookedRooms>
       </ProfileDiv>
     </>

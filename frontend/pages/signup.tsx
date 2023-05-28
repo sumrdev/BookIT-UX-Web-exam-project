@@ -22,7 +22,6 @@ const LogoTitle = styled.h1`
   color: #000000;
   font-size: 3rem; 
   margin-bottom: 1rem; 
-  font-family: 'Lexend', sans-serif;
 `;
 
 const LoginForm = styled.form`
@@ -39,6 +38,7 @@ const LoginInput = styled.input`
   margin-bottom: 1rem;
   padding: 0.5rem;
   border-radius: 5px;
+  font-size: 18px;
   border: 1px solid #ced4da;
   border: none;
 `;
@@ -72,6 +72,8 @@ const Signup: NextPageWithLayout = () => {
         const result = await response.json();
         user = result.user;
         document.cookie = `token=${result.token}`;
+        toast.success("Welcome to BookIT!");
+        await new Promise(resolve => setTimeout(resolve, 1050)); // sleep for 500ms
         router.push('/');
     } else {
         toast.error("Sign up failed!");
@@ -87,7 +89,7 @@ const Signup: NextPageWithLayout = () => {
               <LoginInput type="username" placeholder="Username" name='username' />
               <LoginInput type="password" placeholder="Password" name='password' autoComplete='new-password' />
               <LoginInput type="password" placeholder="Repeat Password" name='repeat_password' autoComplete='new-password' />
-              <p style={{marginTop: '0px', textAlign: 'center', fontSize: 13}}>or sign in <Link href="/login" className="link-class">here</Link></p>
+              <p style={{marginTop: '0px', textAlign: 'center', fontSize: 16}}>or sign in <Link href="/login" className="link-class">here</Link></p>
               <SmallButton>Sign up</SmallButton>
           </LoginForm>
           <Toaster />

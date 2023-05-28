@@ -19,7 +19,6 @@ const LogoTitle = styled.h1`
   color: #000000;
   font-size: 3rem; 
   margin-bottom: 1rem; 
-  font-family: 'Lexend', sans-serif;
 `;
 
 const LoginForm = styled.form`
@@ -35,6 +34,7 @@ const LoginForm = styled.form`
 const LoginInput = styled.input`
   margin-bottom: 1rem;
   padding: 0.5rem;
+  font-size: 18px;
   border-radius: 5px;
   border: 1px solid #ced4da;
   border: none;
@@ -42,8 +42,8 @@ const LoginInput = styled.input`
 
 const LoginHint = styled.p`
   margin-top: 0px;
+  font-size: 16px;
   text-align: center;
-  font-size: 13px;
 `;
 
 
@@ -67,6 +67,8 @@ const Login: NextPageWithLayout = () => {
       const result = await response.json();
       user = result.user;
       document.cookie = `token=${result.token}`;
+      toast.success("Signing in...");
+      await new Promise(resolve => setTimeout(resolve, 750)); // sleep for 500ms
       router.push('/');
     } else {
       toast.error("Sign in failed!");

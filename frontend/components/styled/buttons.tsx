@@ -2,6 +2,7 @@ import styled from 'styled-components'
 const SmallButton = styled.button`
   padding: 0.5rem;
   border-radius: 5px;
+  font-size: 18px;
   border: none;
   color: #ffffff; /* Text color */
   background-color: #e06464; /* Button color */
