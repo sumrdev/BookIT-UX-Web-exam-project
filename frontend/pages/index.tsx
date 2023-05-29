@@ -164,6 +164,10 @@ function Home() {
             setAvailableNow(availableNow);
             setAvalableLater(availableLater);
             setNotAvailable(notAvailable);
+        } else {
+            setAvailableNow([]);
+            setAvalableLater([]);
+            setNotAvailable([]);
         }
     }, [rooms])
 
