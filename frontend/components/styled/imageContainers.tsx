@@ -3,10 +3,13 @@ import styled from 'styled-components'
 
 const RoomImageContainer = styled.div`
     width: 100%;
-    height: 120px;
+    height: 160px;
     margin-bottom: 1rem;
     position: relative;
     max-width: 400px;
+    @media (min-width: 768px) {
+        height: 200px;
+    }
 `
 
 const RoomImage = styled(Image).attrs<{type:string, width:number}>((props) => ({

@@ -33,7 +33,7 @@ function roomID({}) {
 
     const date = new Date();
     const availableTimes : Date[] = []
-    for (let i = 8; i <= 22; i++) {
+    for (let i = 8; i < 22; i++) {
         const time = new Date(date.getFullYear(), date.getMonth(), date.getDate(), i);
         availableTimes.push(time)
     }

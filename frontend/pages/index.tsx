@@ -48,7 +48,11 @@ const RoomsBox = styled.div`
     }
 
 `
-
+type Booking = {
+    startTime: string,
+    endTime: string,
+    roomId: number,
+}
 
 function Home() {
   const {setShowBackbutton, setHeading, setProfile} = useContext(NavContext);
@@ -70,10 +74,12 @@ function Home() {
   }
   const [rooms, setRooms] = useState<any[]>([])
   const { data, loading, error } = useDB("rooms");
+  const [availableNow, setAvailableNow] = useState<any[]>([])
+  const [avalableLater, setAvalableLater] = useState<any[]>([])
+  const [notAvailable, setNotAvailable] = useState<any[]>([])
     useEffect(() => {
         if (data) {
             setRooms(data)
-            console.log(data)
         }
     }, [data])
 
@@ -85,6 +91,60 @@ function Home() {
             if (data) setRooms(data.filter((room: any) => filters.includes(room.type)))
         }
     }, [filters])
+
+    useEffect(() => {
+        if (rooms && rooms.length > 0) {
+            const availableNow: any[] = [];
+            const availableLater: any[] = [];
+            const notAvailable: any[] = [];
+            for (let room of rooms) {
+                const bookings  = room.bookings as Booking[];
+                const now = new Date("2023-05-28T17:00:00.000Z");
+                const laterBookings = bookings.filter((booking) => {
+                    const end = new Date(booking.endTime);
+                    return end > now;
+                })
+                console.log(bookings)
+                if (laterBookings.length === 0) {
+                    if (now.getHours() < 8 || now.getHours() > 22) {
+                        availableLater.push(room);
+                        continue;
+                    } else {
+                        availableNow.push(room);
+                        continue;
+                    }
+                }
+                const sortedBookings = laterBookings.sort((a, b) => {
+                    const aStart = new Date(a.endTime);
+                    const bStart = new Date(b.endTime);
+                    return aStart.getTime() - bStart.getTime();
+                })
+                if (new Date(sortedBookings[0].startTime) > now) {
+                    availableNow.push(room);
+                    continue;
+                }
+                let currentTime = new Date(sortedBookings[0].startTime);
+                let availableToday = false;
+                for (let booking of sortedBookings) {
+                    const end = new Date(booking.endTime);
+                    if (now.toISOString() != currentTime.toISOString()) {
+                        availableLater.push(room);
+                        availableToday = true;
+                        break;
+                    } else {
+                        currentTime = end;
+                    }
+                }
+
+                if (availableToday === false) {
+                    notAvailable.push(room);
+                } 
+            }
+            setAvailableNow(availableNow);
+            setAvalableLater(availableLater);
+            setNotAvailable(notAvailable);
+        }
+    }, [rooms])
 
 
   return (
@@ -100,7 +160,23 @@ function Home() {
         {error && <div>Error: {error.message}</div>}
         {
             <RoomsBox>
-                {rooms.map((room: any) => (
+                {availableNow.map((room: any) => (
+                    <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={room.bookings} />
+                ))}
+            </RoomsBox>
+        }
+        <BoxHeaderSmall>Available later</BoxHeaderSmall>
+        {
+            <RoomsBox>
+                {avalableLater.map((room: any) => (
+                    <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={room.bookings} />
+                ))}
+            </RoomsBox>
+        }
+        <BoxHeaderSmall>Not Available</BoxHeaderSmall>
+        {
+            <RoomsBox>
+                {notAvailable.map((room: any) => (
                     <RoomInformationBox id={room.id} key={room.id} name={room.name} type={room.type} capacity={room.capacity} bookings={room.bookings} />
                 ))}
             </RoomsBox>
