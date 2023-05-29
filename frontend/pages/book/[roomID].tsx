@@ -19,6 +19,35 @@ const Spacer = styled.div`
     height: 70px;
 `
 
+const BookingContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    @media (min-width: 768px) {
+    flex-direction: row;
+        align-items: flex-start;
+        padding: 2rem;
+        padding-bottom: 5rem;
+    }
+`
+
+const TimeSelectContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const CheckBox = styled.input`
+    width: 20px;
+    height: 20px;
+`
+const TableCheckboxContainer = styled.td`
+    width: 40px;
+`
+
 function roomID({}) {
     const {  setShowBackbutton, setProfile, setHeading } = useContext(NavContext);
     useEffect(() => {
@@ -136,38 +165,40 @@ function roomID({}) {
         return newBookings;
     }
   return (
-    <> 
+    <BookingContainer> 
         <RoomImageContainer>
             <RoomImage type={"skybox"} fill={true} title="aaa" priority></RoomImage>
             <RoomImageText>{data && `${data.type} - ${data.name}`}</RoomImageText>
         </RoomImageContainer>
-        <h2>About this room:</h2>
-        {loading && <div>Loading...</div>}
-        {error && <div>Error: {error.message}</div>}
-        {data && (
-            <Table>
-                <tbody>
-                    {availableTimes.map((date, index) => (
-                        <TableRow key={index} onClick={() => toggleTime(date)}>
-                            <TableCategory>{`${date.getHours()} - ${date.getHours()+1}`}</TableCategory>
-                            <td>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        checked={selectedTimes.map(date => date.toISOString()).includes(date.toISOString())}
-                                        onChange={() => toggleTime(date)}
-                                        disabled={dateIsUnavailable(date)}
-                                    />
-                                </label>
-                            </td>
-                        </TableRow>
-                    ))}
-                </tbody>
-            </Table>
-        )}
+        <TimeSelectContainer>
+            <h2>Select a time below:</h2>
+            {loading && <div>Loading...</div>}
+            {error && <div>Error: {error.message}</div>}
+            {data && (
+                <Table>
+                    <tbody>
+                        {availableTimes.map((date, index) => (
+                            <TableRow key={index} onClick={() => toggleTime(date)}>
+                                <TableCategory>{`${date.getHours()} - ${date.getHours()+1}`}</TableCategory>
+                                <TableCheckboxContainer>
+                                    <label>
+                                        <CheckBox
+                                            type="checkbox"
+                                            checked={selectedTimes.map(date => date.toISOString()).includes(date.toISOString())}
+                                            onChange={() => toggleTime(date)}
+                                            disabled={dateIsUnavailable(date)}
+                                        />
+                                    </label>
+                                </TableCheckboxContainer>
+                            </TableRow>
+                        ))}
+                    </tbody>
+                </Table>
+            )}
+        </TimeSelectContainer>
         <Spacer/>
         <FloatButton onClick={() => bookNow()}>Book now<Toaster /></FloatButton>
-    </>
+    </BookingContainer>
   )
 }
 
