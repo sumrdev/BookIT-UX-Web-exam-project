@@ -3,7 +3,6 @@ import { useEffect } from "react";
 export default function About(){
 
     useEffect(() => {
-        console.log("AAAAAAAAA")
         fetch('http://localhost:3000/', { method: 'GET' })
         .then(res => res.json())
         .then(data => console.log(data))

@@ -10,7 +10,6 @@ function useDB(apiPath: string) {
             const token = document.cookie.split("=")[1];
             if (!token) throw new Error("Unauthorized");
             setLoading(true)
-            console.log("fetching data at: " + `${process.env.NEXT_PUBLIC_DB_ENDPOINT}/${apiPath}`)
             const response = await fetch(`${process.env.NEXT_PUBLIC_DB_ENDPOINT}/${apiPath}`, {
                 headers: {
                     'Content-type': 'application/json',

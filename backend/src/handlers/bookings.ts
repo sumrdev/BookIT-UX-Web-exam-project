@@ -3,6 +3,12 @@ import { PrismaClient } from "@prisma/client";
 import { Request } from "express-jwt";
 const prisma = new PrismaClient();
 
+const bookingPermissions = {
+  "Student": ["Skybox"],
+  "TA": ["Skybox", "Classroom"],
+  "Professor": ["Skybox", "Classroom", "Auditorium"],
+} as {[key: string]: string[]}
+
 export const createBooking = async (req: Request, res: Response) => {
     /*	#swagger.requestBody = {
               required: true,
@@ -18,6 +24,15 @@ export const createBooking = async (req: Request, res: Response) => {
       if(!req.auth.id && req.auth.isAdmin===false){{
         return res.status(401).json({ message: "Unauthorized" }
       )}}; 
+
+      // Check if user is allowed to book this room
+
+      const room = await prisma.room.findUnique({
+        where: {
+          id: roomId,
+        },
+      });
+      if(bookingPermissions[req.auth.role] && !bookingPermissions[req.auth.role].includes(room.type)) return res.status(401).json({ message: "You are not allowed to book this room" } );
 
       const newRoom = await prisma.room.update({
         where: {
@@ -66,8 +81,19 @@ export const createBooking = async (req: Request, res: Response) => {
 
       if(bookings.length < 2) return res.status(400).json({ message: "You must provide at least 2 bookings" });
 
+      // Check if user is allowed to book this room
+
+      const room = await prisma.room.findUnique({
+        where: {
+          id: validateRoomID,
+        },
+      });
+
+      if(bookingPermissions[req.auth.role] && !bookingPermissions[req.auth.role].includes(room.type)) return res.status(401).json({ message: "You are not allowed to book this room" } );
+
       bookings.forEach((booking: { roomId: any; }) => {
-        if(booking.roomId !== validateRoomID) return res.status(400).json({ message: "All bookings must be for the same room" })
+        if(booking.roomId !== validateRoomID ) return res.status(400).json({ message: "All bookings must be for the same room" })
+
       });
 
       const newBookings = bookings.map((booking: any) => {

@@ -88,10 +88,10 @@ function roomID({}) {
             });
         });
         finalBookings = meargeBookings(finalBookings);
-
+        let res;
         const token = document.cookie.split("=")[1];
         if(finalBookings.length > 1) {
-            await fetch("http://localhost:4000/booking/many", {
+            res = await fetch("http://localhost:4000/booking/many", {
                 method: "POST",
                 body: JSON.stringify({bookings: finalBookings}),
                 headers: {
@@ -100,7 +100,7 @@ function roomID({}) {
                 },
             });
         } else {
-            await fetch("http://localhost:4000/booking", {
+            res = await fetch("http://localhost:4000/booking", {
                 method: "POST",
                 body: JSON.stringify(finalBookings[0]),
                 headers: {
@@ -109,8 +109,14 @@ function roomID({}) {
                 },
             });
         }
-        toast.success("Successfully booked room!");
-        await sleep(750);
+        console.log(res.status)
+        if (res.status != 200) {
+            toast.error("Failed to book room, do yuo have permission?");
+            await sleep(1250);
+        } else {
+            toast.success("Successfully booked room!");
+            await sleep(750);
+        }
         router.push("/");
     }
 

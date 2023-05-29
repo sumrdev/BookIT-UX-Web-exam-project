@@ -15,7 +15,7 @@ model User {
   email    String    @unique
   name     String
   password String
-  role     String    @default("user")
+  role     String    @default("Student")
   admin    Boolean   @default(false)
   bookings Booking[]
 }
