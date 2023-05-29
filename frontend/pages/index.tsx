@@ -92,6 +92,15 @@ function Home() {
         }
     }, [filters])
 
+    function currentDateAtTime(date: Date) {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const now = new Date();
+        now.setHours(hours);
+        now.setMinutes(minutes);
+        return now;
+    }
+
     useEffect(() => {
         if (rooms && rooms.length > 0) {
             const availableNow: any[] = [];
@@ -99,12 +108,11 @@ function Home() {
             const notAvailable: any[] = [];
             for (let room of rooms) {
                 const bookings  = room.bookings as Booking[];
-                const now = new Date("2023-05-28T17:00:00.000Z");
+                const now = new Date();
                 const laterBookings = bookings.filter((booking) => {
-                    const end = new Date(booking.endTime);
+                    const end = currentDateAtTime(new Date(booking.endTime));
                     return end > now;
                 })
-                console.log(bookings)
                 if (laterBookings.length === 0) {
                     if (now.getHours() < 8 || now.getHours() > 22) {
                         availableLater.push(room);
@@ -115,30 +123,43 @@ function Home() {
                     }
                 }
                 const sortedBookings = laterBookings.sort((a, b) => {
-                    const aStart = new Date(a.endTime);
-                    const bStart = new Date(b.endTime);
+                    const aStart = currentDateAtTime(new Date(a.endTime));
+                    const bStart = currentDateAtTime(new Date(b.endTime));
                     return aStart.getTime() - bStart.getTime();
                 })
-                if (new Date(sortedBookings[0].startTime) > now) {
+                
+                let startFirstBooking = currentDateAtTime(new Date(sortedBookings[0].startTime));
+                if (startFirstBooking > now) {
                     availableNow.push(room);
                     continue;
-                }
-                let currentTime = new Date(sortedBookings[0].startTime);
+                } 
+                let timeToCompare = currentDateAtTime(new Date(sortedBookings[0].endTime));
+                const endOfToday = new Date();
+                endOfToday.setHours(22);
+                endOfToday.setMinutes(0);
                 let availableToday = false;
                 for (let booking of sortedBookings) {
+                    const start = new Date(booking.startTime);
                     const end = new Date(booking.endTime);
-                    if (now.toISOString() != currentTime.toISOString()) {
-                        availableLater.push(room);
+                    if (sortedBookings[0] != booking && start.getHours() != timeToCompare.getHours()) {
+                        availableToday = true;
+                        break;
+                    } else if (end >= endOfToday) {
+                        availableToday = false;
+                        break;
+                    } else if (sortedBookings[sortedBookings.length-1] == booking && end.getHours() < endOfToday.getHours()) {
                         availableToday = true;
                         break;
                     } else {
-                        currentTime = end;
+                        timeToCompare = end;
                     }
                 }
 
                 if (availableToday === false) {
                     notAvailable.push(room);
-                } 
+                } else {
+                    availableLater.push(room);
+                }
             }
             setAvailableNow(availableNow);
             setAvalableLater(availableLater);

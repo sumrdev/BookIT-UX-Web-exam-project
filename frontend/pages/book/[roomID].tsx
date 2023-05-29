@@ -50,16 +50,17 @@ function roomID({}) {
     }
 
     function dateIsUnavailable(date: Date) {
+        const datePlus1Hour = new Date(date.getTime() + 3600 * 1000);
         let isUnavailable = false;
+        const currentDate = new Date();
+        if(datePlus1Hour < currentDate) {
+            isUnavailable = true;
+            return true;
+        }
         Bookings.forEach((booking) => {
-            const currentDate = new Date(Date.now());
             const startTime = new Date(booking.startTime);
             const endTime = new Date(booking.endTime);
             if (date >= startTime && date < endTime) {
-                isUnavailable = true;
-                return true;
-            }
-            if(new Date(date) < currentDate) {
                 isUnavailable = true;
                 return true;
             }
@@ -109,7 +110,6 @@ function roomID({}) {
                 },
             });
         }
-        console.log(res.status)
         if (res.status != 200) {
             toast.error("Failed to book room, do yuo have permission?");
             await sleep(1250);

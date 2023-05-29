@@ -57,7 +57,6 @@ function Profile() {
   const { setShowBackbutton, setHeading, setProfile } = useContext(NavContext);
 
   const { data, loading, error, fetchData } = useDB("getMyUser");
-
   const [user, setUser] = useState<user>({
     name: "",
     role: "",
